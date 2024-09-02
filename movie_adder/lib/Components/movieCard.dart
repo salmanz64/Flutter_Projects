@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_adder/Model/CardModel.dart';
+import 'package:movie_adder/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'movieDialog.dart';
@@ -25,7 +25,7 @@ class MovieCard extends StatelessWidget {
       child: SizedBox(
         height: 150,
         child: Card(
-          shape: OutlineInputBorder(
+          shape: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -38,7 +38,7 @@ class MovieCard extends StatelessWidget {
                   children: [
                     Text(
                       "Movie: $movieName",
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     Text("Genre: $genre"),
                     Text("Release Date: $date"),
@@ -61,13 +61,15 @@ class MovieCard extends StatelessWidget {
                             },
                           );
                         },
-                        icon: Icon(Icons.edit)),
+                        icon: const Icon(Icons.edit)),
                     IconButton(
-                        onPressed: () {
-                          Provider.of<CardModel>(context, listen: false)
-                              .deleteMovie(index: index);
-                        },
-                        icon: Icon(Icons.delete)),
+                      onPressed: () {
+                        Provider.of<MovieProvider>(context, listen: false)
+                            .deleteMovie(index: index);
+                      },
+                      icon: const Icon(Icons.delete),
+                      color: Colors.red,
+                    ),
                   ],
                 ),
               ],

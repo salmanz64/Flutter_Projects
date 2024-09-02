@@ -10,18 +10,18 @@ class MovieProvider with ChangeNotifier {
 
   List<Movie> get movies => _movies;
 
-  void addMovie(Movie movie) {
-    _movies.add(movie);
+  void addMovie({Movie? movie}) {
+    _movies.add(movie!);
     notifyListeners();
   }
 
-  void editMovie(Movie movie, int index) {
-    _movies[index] = movie;
+  void editMovie({Movie? movie, int? index}) {
+    _movies[index!] = movie!;
     notifyListeners();
   }
 
-  void deleteMovie(int index) {
-    _movies.removeAt(index);
+  void deleteMovie({int? index}) {
+    _movies.removeAt(index!);
     notifyListeners();
   }
 }

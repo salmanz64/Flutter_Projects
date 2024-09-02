@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_adder/Components/movieDialog.dart';
-import 'package:movie_adder/Model/CardModel.dart';
+import 'package:movie_adder/Model/movie.dart';
 import 'package:movie_adder/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _movieCreator = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: movieProvider.movies.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
+            Movie movie = movieProvider.movies[index];
             return MovieCard(
               index: index,
-              movieName: movie.movies[index][0],
-              genre: movie.movies[index][1],
-              date: movie.movies[index][2],
-              rating: movie.movies[index][3],
+              movieName: movie.name,
+              genre: movie.genre,
+              date: movie.releaseDate,
+              rating: movie.rating,
             );
           },
         );

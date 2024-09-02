@@ -4,9 +4,10 @@ class Movie {
   String releaseDate;
   int rating;
 
-  Movie(
-      {required this.name,
-      required this.genre,
-      required this.releaseDate,
-      required this.rating});
+  Movie({
+    required this.name,
+    required this.genre,
+    required this.releaseDate,
+    required this.rating,
+  });
 }

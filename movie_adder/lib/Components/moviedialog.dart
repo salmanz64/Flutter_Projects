@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_if_null_operators, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:movie_adder/Model/movie.dart';
 import 'package:movie_adder/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,19 +16,19 @@ class MovieDialog extends StatefulWidget {
 }
 
 class _MovieDialogState extends State<MovieDialog> {
-  TextEditingController _controller = TextEditingController();
+  final _controller = TextEditingController();
 
-  String? _movieGenre;
+  String? _newGenre;
 
-  String? _movieName;
+  String? _newName;
 
-  String? _movieYear;
+  String? _newReleaseDate;
 
-  int? _movieRating;
-
+  int? _newRating;
+  bool changed = false;
   @override
   Widget build(BuildContext context) {
-    return Consumer<MovieProvider>(builder: (context, movieCard, child) {
+    return Consumer<MovieProvider>(builder: (context, movieProvider, child) {
       return AlertDialog(
         title: Text(
             widget.editMode == false ? "Add a new movie" : "Edit the Movie"),
@@ -39,32 +42,34 @@ class _MovieDialogState extends State<MovieDialog> {
                 decoration: InputDecoration(
                     hintText: widget.editMode == false
                         ? "Enter movie name"
-                        : "${movieCard.movies[widget.index!][0]}"),
+                        : movieProvider.movies[widget.index!].name),
               ),
               Row(
                 children: [
-                  Text("Genre: "),
+                  const Text("Genre: "),
                   DropdownButton(
-                      value: widget.editMode == false
-                          ? _movieGenre
-                          : movieCard.movies[widget.index!][1],
-                      hint: Text("Choose genre"),
+                      value: _newGenre == null
+                          ? widget.editMode == true
+                              ? movieProvider.movies[widget.index!].genre
+                              : _newGenre
+                          : _newGenre,
+                      hint: const Text("Choose genre"),
                       items: ["Action", "Scifi", "Romance", "Comedy", "Drama"]
                           .map((genre) => DropdownMenuItem(
-                                child: Text(genre),
                                 value: genre,
+                                child: Text(genre),
                               ))
                           .toList(),
                       onChanged: (newVal) {
                         setState(() {
-                          _movieGenre = newVal as String?;
+                          _newGenre = newVal;
                         });
                       })
                 ],
               ),
               Row(
                 children: [
-                  Text("Release Date: "),
+                  const Text("Release Date: "),
                   ElevatedButton(
                       onPressed: () async {
                         final DateTime? pickedDate = await showDatePicker(
@@ -74,35 +79,38 @@ class _MovieDialogState extends State<MovieDialog> {
                             lastDate: DateTime(2026));
                         if (pickedDate != null) {
                           setState(() {
-                            _movieYear =
+                            _newReleaseDate =
                                 DateFormat("MM/dd/yyyy").format(pickedDate);
                           });
                         }
                       },
-                      child: _movieYear == null
+                      child: _newReleaseDate == null
                           ? widget.editMode == false
-                              ? Text("Choose Date")
-                              : Text("${movieCard.movies[widget.index!][2]}")
-                          : Text("$_movieYear"))
+                              ? const Text("Choose Date")
+                              : Text(movieProvider
+                                  .movies[widget.index!].releaseDate)
+                          : Text("$_newReleaseDate"))
                 ],
               ),
               Row(
                 children: [
-                  Text("Rating: "),
+                  const Text("Rating: "),
                   DropdownButton(
-                      hint: Text("choose Rating"),
-                      value: widget.editMode == false
-                          ? _movieRating
-                          : movieCard.movies[widget.index!][3],
+                      hint: const Text("choose Rating"),
+                      value: _newRating == null
+                          ? widget.editMode == true
+                              ? movieProvider.movies[widget.index!].rating
+                              : _newRating
+                          : _newRating,
                       items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                           .map((rating) => DropdownMenuItem(
-                                child: Text(rating.toString()),
                                 value: rating,
+                                child: Text(rating.toString()),
                               ))
                           .toList(),
                       onChanged: (newVale) {
                         setState(() {
-                          _movieRating = newVale as int?;
+                          _newRating = newVale;
                         });
                       })
                 ],
@@ -114,20 +122,25 @@ class _MovieDialogState extends State<MovieDialog> {
           ElevatedButton(
               onPressed: () {
                 // Add the new movie to the list
-                _movieName = _controller.text;
+                _newName = _controller.text;
                 widget.editMode == false
-                    ? Provider.of<CardModel>(context, listen: false)
-                        .insertMovie(
-                            name: _movieName,
-                            movieGenre: _movieGenre,
-                            movieReleaseDate: _movieYear,
-                            rating1: _movieRating)
-                    : Provider.of<CardModel>(context, listen: false).editMovie(
-                        index: widget.index!,
-                        name: _movieName,
-                        movieGenre: _movieGenre,
-                        movieReleaseDate: _movieYear,
-                        rating1: _movieRating);
+                    ? Provider.of<MovieProvider>(context, listen: false)
+                        .addMovie(
+                            movie: Movie(
+                        name: _newName!,
+                        genre: _newGenre!,
+                        releaseDate: _newReleaseDate!,
+                        rating: _newRating!,
+                      ))
+                    : Provider.of<MovieProvider>(context, listen: false)
+                        .editMovie(
+                            movie: Movie(
+                              name: _newName!,
+                              genre: _newGenre!,
+                              releaseDate: _newReleaseDate!,
+                              rating: _newRating!,
+                            ),
+                            index: widget.index);
 
                 MovieDialog(
                   editMode: false,
@@ -135,12 +148,12 @@ class _MovieDialogState extends State<MovieDialog> {
 
                 Navigator.of(context).pop();
               },
-              child: Text("Save")),
+              child: const Text("Save")),
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"))
+              child: const Text("Cancel"))
         ],
       );
     });
