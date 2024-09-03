@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_adder/Screens/homePage.dart';
 import 'package:provider/provider.dart';
+import 'Screens/loginPage.dart';
 import 'providers/movie_provider.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: LoginPage(),
     );
   }
 }
