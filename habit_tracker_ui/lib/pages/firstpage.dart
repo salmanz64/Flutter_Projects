@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker_ui/components/habitCategoryCard.dart';
+import 'package:habit_tracker_ui/pages/homepage.dart';
 
 class FirstPage extends StatelessWidget {
   FirstPage({super.key});
@@ -58,18 +59,27 @@ class FirstPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Container(
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const Center(
-                child: Text(
-                  "Get Started",
-                  style: TextStyle(
-                    color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Homepage(),
+                    ));
+              },
+              child: Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Get Started",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
