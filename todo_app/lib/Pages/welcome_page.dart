@@ -6,7 +6,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFF122D42),
+      backgroundColor: const Color(0XFF122D42),
       body: Row(
         children: [
           Expanded(
@@ -14,23 +14,26 @@ class WelcomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image(
+                const Image(
                   image: AssetImage('lib/assets/logo.png'),
                   height: 280,
                   width: 280,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  height: 50,
-                  child: Center(
-                      child: Text(
-                    "Get Started",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  )),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Center(
+                        child: Text(
+                      "Get Started",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )),
+                  ),
                 )
               ],
             ),

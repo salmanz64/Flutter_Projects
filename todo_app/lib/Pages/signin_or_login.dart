@@ -6,14 +6,14 @@ class SigninOrLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFF122D42),
+      backgroundColor: const Color(0XFF122D42),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image(
+            const Image(
               image: AssetImage('lib/assets/logo.png'),
               height: 250,
               width: 250,
@@ -21,47 +21,42 @@ class SigninOrLogin extends StatelessWidget {
             Column(
               children: [
                 TextField(
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white
                           .withOpacity(0.01), // Set transparency here
                       hintText: 'Email',
-                      hintStyle:
-                          TextStyle(color: Colors.white70), // Hint text color
+                      hintStyle: const TextStyle(
+                          color: Colors.white70), // Hint text color
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none, // Remove border
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextField(
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white
                           .withOpacity(0.01), // Set transparency here
                       hintText: 'Password',
-                      hintStyle:
-                          TextStyle(color: Colors.white70), // Hint text color
+                      hintStyle: const TextStyle(
+                          color: Colors.white70), // Hint text color
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none, // Remove border
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   width: double.infinity,
                   height: 50,
-                  child: Center(
-                      child: Text(
-                    "L O G I N",
-                    style: TextStyle(color: Colors.white),
-                  )),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.black,
@@ -70,27 +65,32 @@ class SigninOrLogin extends StatelessWidget {
                         color: Colors.black.withOpacity(0.15),
                         spreadRadius: 0,
                         blurRadius: 20, // Increased blur radius
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
+                  child: Center(
+                      child: Text(
+                    "L O G I N",
+                    style: TextStyle(color: Colors.white),
+                  )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       "Don't  have an account?",
                       style: TextStyle(
                           color: Colors.grey, fontWeight: FontWeight.w100),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
                         onTap: () {},
-                        child: Text("Sign up",
+                        child: const Text("Sign up",
                             style: TextStyle(color: Colors.white)))
                   ],
                 ),
