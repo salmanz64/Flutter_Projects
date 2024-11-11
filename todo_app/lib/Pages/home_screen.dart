@@ -9,9 +9,87 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0XFFF3F7FE),
-      drawer: Drawer(
-        child: ListView(
-          children: [],
+      drawer: const Drawer(
+        elevation: 20,
+        backgroundColor: Color(0XFF0E1F54),
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(
+                    Icons.circle,
+                    size: 150,
+                  ),
+                  Icon(
+                    Icons.arrow_back_ios,
+                    size: 30,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 40),
+                child: Text(
+                  "Joy \n Mitchell",
+                  style: TextStyle(fontSize: 40, color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.bookmark_border,
+                  size: 30,
+                ),
+                title: Text(
+                  "Templates",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.category,
+                  size: 30,
+                ),
+                title: Text(
+                  "Categories",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.analytics,
+                  size: 30,
+                ),
+                title: Text(
+                  "Analytics",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  size: 30,
+                ),
+                title: Text(
+                  "Settings",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(
