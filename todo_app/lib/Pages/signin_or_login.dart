@@ -69,7 +69,7 @@ class SigninOrLogin extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Center(
+                  child: const Center(
                       child: Text(
                     "L O G I N",
                     style: TextStyle(color: Colors.white),

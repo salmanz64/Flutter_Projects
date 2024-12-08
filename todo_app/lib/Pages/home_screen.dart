@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/components/add_tasks.dart';
 import 'package:todo_app/components/category_card.dart';
 import 'package:todo_app/components/todo_cards.dart';
 
@@ -170,9 +171,11 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
-        shape: CircleBorder(),
-        onPressed: () {},
-        child: Icon(
+        shape: const CircleBorder(),
+        onPressed: () {
+          showDialog(context: context, builder: (context) => AddTasks());
+        },
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),

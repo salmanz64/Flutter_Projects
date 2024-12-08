@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
                     decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "Get Started",
                       style: TextStyle(

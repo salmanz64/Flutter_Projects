@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/Pages/home_screen.dart';
-import 'package:todo_app/Pages/signin_or_login.dart';
-import 'package:todo_app/Pages/welcome_Page.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
   runApp(const MyApp());
+  var box = await Hive.openBox('mybox');
 }
 
 class MyApp extends StatelessWidget {
