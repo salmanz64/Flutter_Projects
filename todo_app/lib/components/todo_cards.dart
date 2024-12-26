@@ -6,11 +6,13 @@ class TodoCards extends StatefulWidget {
   int index;
   bool checked;
   String title;
+  String category;
   TodoCards(
       {super.key,
       required this.title,
       required this.index,
-      required this.checked});
+      required this.checked,
+      required this.category});
 
   @override
   State<TodoCards> createState() => _TodoCardsState();
@@ -30,13 +32,15 @@ class _TodoCardsState extends State<TodoCards> {
           },
           child: widget.checked
               ? Icon(Icons.check_circle, color: Colors.blue[100])
-              : const Icon(
+              : Icon(
                   Icons.circle_outlined,
+                  color: Provider.of<TodoDatabase>(context)
+                      .categories[widget.category]["color"],
                 )),
       title: widget.checked
           ? Text(
               widget.title,
-              style: TextStyle(decoration: TextDecoration.lineThrough),
+              style: const TextStyle(decoration: TextDecoration.lineThrough),
             )
           : Text(widget.title),
       iconColor: Colors.blue,

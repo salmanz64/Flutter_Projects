@@ -14,11 +14,10 @@ class _AddTasksState extends State<AddTasks> {
   List<String> prioritylist = <String>["High", "Medium", "Low"];
   List<String> categories = [
     "Skills",
-    "Learning",
+    "Entertainment",
     "Career",
     "Health",
     "Finance",
-    "Entertainment"
   ];
 
   String selectedCategory = "Skills";
@@ -161,6 +160,9 @@ class _AddTasksState extends State<AddTasks> {
           actions: [
             ElevatedButton(
                 onPressed: () {
+                  if (_controller.text.isEmpty) {
+                    return;
+                  }
                   value.insertTodo([
                     _controller.text.toString(),
                     selectedCategory.toString(),

@@ -4,6 +4,7 @@ import 'package:todo_app/database/taskmodel.dart';
 
 class CategoryCard extends StatelessWidget {
   String title;
+
   CategoryCard({super.key, required this.title});
 
   @override
@@ -21,27 +22,30 @@ class CategoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${value.categories[title].length}tasks",
+                    "${value.categories[title]["todos"].length} tasks",
                     style: const TextStyle(
                       color: Color(0XFF99A4C3),
                     ),
                   ),
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 30,
+                    style: const TextStyle(
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  LinearProgressIndicator(
-                    backgroundColor: const Color(0XFF99A4C3),
-                    borderRadius: BorderRadius.circular(20),
-                    minHeight: 4,
-                    color: Colors.blue,
-                    value: value.categories[title].length / 10,
+                  GestureDetector(
+                    onTap: () => print(value.categories[title].length / 10),
+                    child: LinearProgressIndicator(
+                      backgroundColor: const Color(0XFF99A4C3),
+                      borderRadius: BorderRadius.circular(20),
+                      minHeight: 4,
+                      color: value.categories[title]["color"],
+                      value: value.categories[title]["todos"].length / 10,
+                    ),
                   )
                 ],
               ),

@@ -126,12 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconSize: 30,
                 color: const Color(0XFF99A4C3),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications),
-                iconSize: 30,
-                color: const Color(0XFF99A4C3),
-              )
             ],
           ),
           body: SingleChildScrollView(
@@ -188,17 +182,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.red,
                             child: const Icon(Icons.delete),
                           ),
-                          key: ValueKey(value.todo[index][0]),
+                          key: ValueKey(value.tdTasks[index][0]),
                           onDismissed: (direction) {
                             value.deleteTodo(index);
                           },
                           child: TodoCards(
-                            title: tododb.todo[index][0],
-                            checked: tododb.todo[index][4],
+                            title: tododb.tdTasks[index][0],
+                            checked: tododb.tdTasks[index][4],
                             index: index,
+                            category: tododb.tdTasks[index][1],
                           ));
                     },
-                    itemCount: value.todo.length,
+                    itemCount: value.tdTasks.length,
                     separatorBuilder: (context, index) {
                       return const SizedBox(
                         height: 10,
