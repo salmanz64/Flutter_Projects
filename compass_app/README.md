@@ -8,9 +8,9 @@ This is a simple Compass app built using Flutter, which utilizes the `flutter_co
 - Asks for location permission if not already granted.
 
 ## Screenshots
-*Add your compass app screenshots here.*
 
-![Compass App Screenshot](image-placeholder.png)
+![Screenshot 2025-01-04 202703](https://github.com/user-attachments/assets/3945f11c-b012-4d10-8275-9a9c5eca0216)
+
 
 ## Getting Started
 
