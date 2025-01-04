@@ -24,7 +24,7 @@ Ensure you have Flutter installed on your machine. If not, follow the instructio
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/compass-app.git
+   git clone https://github.com/salmanz64/Flutter_Projects/edit/main/compass_app/.git
    ```
 2. Navigate to the project directory:
    ```bash
