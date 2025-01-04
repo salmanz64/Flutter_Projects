@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,13 +43,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPermission() {
-    return ElevatedButton(
-        onPressed: () {
-          Permission.locationWhenInUse.request().then((value) {
-            _fetchPermissionStatus();
-          });
-        },
-        child: Center(child: Text("Click the grant Location Permission")));
+    return Center(
+      child: ElevatedButton(
+          onPressed: () {
+            Permission.locationWhenInUse.request().then((value) {
+              _fetchPermissionStatus();
+            });
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Click to Grant Permission for Location"),
+          )),
+    );
   }
 
   Widget _buildCompass() {
@@ -56,19 +62,33 @@ class _HomeScreenState extends State<HomeScreen> {
         stream: FlutterCompass.events,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text("An Error has Occured");
+            return const Text("An Error has Occured");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           double? direction = snapshot.data!.heading;
           if (direction == null) {
-            return Text("No Direction or sensor Issue");
+            return const Text("No Direction or sensor Issue");
           }
 
           return Container(
-            child: Image.asset('lib/images/compass.png'),
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+              colors: [
+                Colors.black,
+                Colors.grey.shade900,
+              ],
+            )),
+            child: Transform.rotate(
+              angle: (direction * (math.pi / 180) * -1),
+              child: Container(
+                child: Image.asset('lib/images/compass.png'),
+              ),
+            ),
           );
         });
   }
