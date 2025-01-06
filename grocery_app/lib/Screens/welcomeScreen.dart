@@ -36,10 +36,11 @@ class WelcomeScreen extends StatelessWidget {
               height: 40,
             ),
             GestureDetector(
-              onTap: () =>
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => HomeScreen(),
-              )),
+              onTap: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  )),
               child: Container(
                 width: 150,
                 height: 50,
