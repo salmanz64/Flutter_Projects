@@ -47,6 +47,10 @@ class HomeScreen extends StatelessWidget {
                           price: value.items[index][1],
                           image: value.items[index][2],
                           color: value.items[index][3],
+                          onTap: () {
+                            Provider.of<Cartmodel>(context, listen: false)
+                                .addToCart(value.items[index]);
+                          },
                         );
                       },
                       itemCount: value.items.length,

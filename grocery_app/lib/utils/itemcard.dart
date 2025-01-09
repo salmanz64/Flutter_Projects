@@ -5,13 +5,14 @@ class ItemCard extends StatelessWidget {
   int price;
   String image;
   MaterialColor color;
-  ItemCard({
-    super.key,
-    required this.item,
-    required this.price,
-    required this.image,
-    required this.color,
-  });
+  void Function()? onTap;
+  ItemCard(
+      {super.key,
+      required this.item,
+      required this.price,
+      required this.image,
+      required this.color,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class ItemCard extends StatelessWidget {
               width: 60,
               child: MaterialButton(
                 color: color,
-                onPressed: () {},
+                onPressed: onTap,
                 child: Center(child: Text(price.toString())),
               ),
             )

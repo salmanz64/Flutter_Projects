@@ -37,6 +37,26 @@ class CartScreen extends StatelessWidget {
                     },
                     itemCount: value.cartItems.length,
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Text("Your Price"),
+                            Text("\$" + value.calculateTotalPrice()),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 )
               ],
             );
