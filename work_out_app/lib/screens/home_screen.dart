@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:work_out_app/models/workout_data.dart';
 import 'package:work_out_app/utils/workout_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,15 +15,21 @@ class HomeScreen extends StatelessWidget {
         return AlertDialog(
           backgroundColor: Colors.grey[900],
           content: TextField(
+              style: TextStyle(color: Colors.white),
               controller: _workoutController,
               decoration: InputDecoration(
+                  fillColor: Colors.white,
                   hintText: "New Workout",
                   hintStyle: const TextStyle(color: Colors.white70),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)))),
           actions: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<WorkoutData>(context, listen: false)
+                    .addWorkout(_workoutController.text);
+                Navigator.of(context).pop();
+              },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
               child: const Text(
                 "Save",
@@ -29,7 +37,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
               child: const Text(
                 "Cancel",
@@ -44,34 +54,42 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 150,
+    return Consumer<WorkoutData>(
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: Colors.grey[300],
+          body: Column(
+            children: [
+              const SizedBox(
+                height: 150,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: value.workoutLength(),
+                  itemBuilder: (context, index) {
+                    return WorkoutCard(
+                      workoutName: value.workoutLists()[index].workoutName,
+                      exercises: value.workoutLists()[index].exercises,
+                    );
+                  },
+                ),
+              )
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return const WorkoutCard();
-              },
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              addWorkout(context);
+            },
+            backgroundColor: Colors.black87,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100)),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
             ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addWorkout(context);
-        },
-        backgroundColor: Colors.black87,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

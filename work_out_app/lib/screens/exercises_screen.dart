@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:work_out_app/models/exercise.dart';
+import 'package:work_out_app/models/workout_data.dart';
 import 'package:work_out_app/utils/exercise_card.dart';
 
 class ExercisesScreen extends StatelessWidget {
-  ExercisesScreen({super.key});
+  final String workoutName;
+  final List<Exercise> exercises;
+
+  ExercisesScreen(
+      {super.key, required this.workoutName, required this.exercises});
+
   final TextEditingController _exercisename = TextEditingController();
   final TextEditingController _weightcontroller = TextEditingController();
   final TextEditingController _repscontroller = TextEditingController();
@@ -18,6 +26,7 @@ class ExercisesScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                  style: TextStyle(color: Colors.white),
                   controller: _exercisename,
                   decoration: InputDecoration(
                       hintText: "Enter your Exercise",
@@ -28,6 +37,7 @@ class ExercisesScreen extends StatelessWidget {
                 height: 10,
               ),
               TextField(
+                  style: TextStyle(color: Colors.white),
                   controller: _weightcontroller,
                   decoration: InputDecoration(
                       hintText: "Weight (Kg)",
@@ -38,6 +48,7 @@ class ExercisesScreen extends StatelessWidget {
                 height: 10,
               ),
               TextField(
+                  style: TextStyle(color: Colors.white),
                   controller: _repscontroller,
                   decoration: InputDecoration(
                       hintText: "Reps",
@@ -48,6 +59,7 @@ class ExercisesScreen extends StatelessWidget {
                 height: 10,
               ),
               TextField(
+                  style: TextStyle(color: Colors.white),
                   controller: _setscontroller,
                   decoration: InputDecoration(
                       hintText: "Sets",
@@ -58,7 +70,15 @@ class ExercisesScreen extends StatelessWidget {
           ),
           actions: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<WorkoutData>(context, listen: false).addExercise(
+                    workoutName,
+                    _exercisename.text,
+                    _weightcontroller.text,
+                    _repscontroller.text,
+                    _setscontroller.text);
+                Navigator.of(context).pop();
+              },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
               child: const Text(
                 "Save",
@@ -66,7 +86,9 @@ class ExercisesScreen extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
               child: const Text(
                 "Cancel",
@@ -81,30 +103,43 @@ class ExercisesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return const ExerciseCard();
-              },
+    return Consumer<WorkoutData>(
+      builder: (context, value, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Workout Tracker"),
+          ),
+          backgroundColor: Colors.grey[300],
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: exercises.length,
+                  itemBuilder: (context, index) {
+                    return ExerciseCard(
+                        name: exercises[index].name,
+                        reps: exercises[index].reps,
+                        sets: exercises[index].sets,
+                        weight: exercises[index].weight,
+                        isCompleted: exercises[index].isCompleted,
+                        workoutName: workoutName);
+                  },
+                ),
+              )
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              addExercise(context);
+            },
+            backgroundColor: Colors.grey[900],
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
             ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addExercise(context);
-        },
-        backgroundColor: Colors.grey[900],
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
