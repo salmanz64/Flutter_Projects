@@ -3,9 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:work_out_app/models/workout_data.dart';
 import 'package:work_out_app/utils/workout_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _workoutController = TextEditingController();
 
   Future<void> addWorkout(context) {
@@ -50,6 +55,12 @@ class HomeScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    Provider.of<WorkoutData>(context, listen: false).initializeWorkoutList();
+    super.initState();
   }
 
   @override
