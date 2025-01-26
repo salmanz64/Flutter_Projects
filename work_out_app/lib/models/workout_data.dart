@@ -7,16 +7,7 @@ import 'package:work_out_app/models/workout.dart';
 class WorkoutData extends ChangeNotifier {
   final db = HiveDatabase();
 
-  List<Workout> _workoutLists = [
-    Workout(workoutName: "Upper Body", exercises: [
-      Exercise(
-        name: "Bicep curls",
-        weight: "10kg",
-        reps: "10 reps",
-        sets: "3 sets",
-      )
-    ])
-  ];
+  List<Workout> _workoutLists = [];
 
   void initializeWorkoutList() {
     if (db.isPreviousData()) {
@@ -24,6 +15,7 @@ class WorkoutData extends ChangeNotifier {
     } else {
       db.saveToDatabase(_workoutLists);
     }
+    loadHeatMap();
   }
 
   // get workoutlists
@@ -65,6 +57,7 @@ class WorkoutData extends ChangeNotifier {
 
     notifyListeners();
     db.saveToDatabase(_workoutLists);
+    loadHeatMap();
   }
 
   //find relvent workout

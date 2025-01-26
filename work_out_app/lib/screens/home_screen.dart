@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:work_out_app/models/workout_data.dart';
+import 'package:work_out_app/utils/heat_map.dart';
 import 'package:work_out_app/utils/workout_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,24 +70,22 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, value, child) {
         return Scaffold(
           backgroundColor: Colors.grey[300],
-          body: Column(
-            children: [
-              const SizedBox(
-                height: 150,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: value.workoutLength(),
-                  itemBuilder: (context, index) {
-                    return WorkoutCard(
-                      workoutName: value.workoutLists()[index].workoutName,
-                      exercises: value.workoutLists()[index].exercises,
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
+          body: ListView(children: [
+            MyHeatMap(
+                datasets: value.heatMapDataSet,
+                startDateyyyymmdd: value.getStartDate()),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: value.workoutLength(),
+              itemBuilder: (context, index) {
+                return WorkoutCard(
+                  workoutName: value.workoutLists()[index].workoutName,
+                  exercises: value.workoutLists()[index].exercises,
+                );
+              },
+            ),
+          ]),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               addWorkout(context);
