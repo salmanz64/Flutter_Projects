@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:work_out_app/models/workout_data.dart';
 import 'package:work_out_app/screens/home_screen.dart';
+import 'package:work_out_app/screens/welcome_screen.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomeScreen(),
+          home: WelcomeScreen(),
         );
       },
     );

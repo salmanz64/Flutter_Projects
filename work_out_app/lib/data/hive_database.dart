@@ -49,7 +49,6 @@ class HiveDatabase {
             reps: exerciseList[i][j][2],
             sets: exerciseList[i][j][3],
             isCompleted: exerciseList[i][j][4] == "true" ? true : false));
-        print(exerciseList[i][j][4]);
       }
       Workout workout = Workout(
           workoutName: workoutList[i], exercises: exercisesInEachWorkout);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_out_app/screens/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -44,18 +45,24 @@ class WelcomeScreen extends StatelessWidget {
               SizedBox(
                   height: 60,
                   width: MediaQuery.of(context).size.width - 100,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black87),
-                    child: const Center(
-                        child: Text(
-                      "Get Started",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => HomeScreen(),
                     )),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black87),
+                      child: const Center(
+                          child: Text(
+                        "Get Started",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      )),
+                    ),
                   ))
             ],
           ),
