@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sneaker_shop/screens/home_screen.dart';
 
 class BottomNav extends StatefulWidget {
   final Function(bool) ontap;
@@ -15,7 +14,7 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: GNav(
           selectedIndex: widget.currentIndex,
           onTabChange: (value) {
@@ -26,7 +25,7 @@ class _BottomNavState extends State<BottomNav> {
           tabBackgroundColor: Colors.white,
           activeColor: Colors.grey.shade700,
           tabBorderRadius: 16,
-          tabs: [
+          tabs: const [
             GButton(
               icon: Icons.home,
               text: 'Home',

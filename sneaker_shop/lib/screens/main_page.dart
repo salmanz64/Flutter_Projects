@@ -7,13 +7,14 @@ import 'package:sneaker_shop/utils/product_card.dart';
 
 class MainPage extends StatelessWidget {
   final Function(bool) ontap;
+
   MainPage({super.key, required this.ontap});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        drawer: MyDrawer(),
+        drawer: const MyDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.grey[200],
           leading: Builder(
@@ -21,41 +22,42 @@ class MainPage extends StatelessWidget {
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.menu,
                 size: 40,
               ),
             ),
           ),
         ),
-        body: Container(
+        body: SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: Column(
             children: [
               SizedBox(
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10)),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Search',
-                    ),
-                  )),
-              SizedBox(
-                height: 30,
+                width: MediaQuery.of(context).size.width - 50,
+                child: TextField(
+                  decoration: InputDecoration(
+                    suffixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Search',
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Text(
                 "Everyone Flies...some flies longer than Others.",
                 style: TextStyle(color: Colors.grey[700]),
               ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -70,7 +72,7 @@ class MainPage extends StatelessWidget {
                           color: Colors.blue,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
-                    )
+                    ),
                   ],
                 ),
               ),

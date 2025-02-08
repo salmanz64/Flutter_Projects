@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 class Shoe {
   String name;
   double price;

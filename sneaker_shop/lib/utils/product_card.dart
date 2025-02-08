@@ -20,8 +20,8 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        height: 120,
-        width: 320,
+        height: MediaQuery.of(context).size.height - 100,
+        width: MediaQuery.of(context).size.width - 100,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: Column(
@@ -81,7 +81,7 @@ class ProductCard extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(10),
                                 topLeft: Radius.circular(10))),
-                        child: Center(
+                        child: const Center(
                           child: Icon(
                             Icons.add,
                             color: Colors.white,

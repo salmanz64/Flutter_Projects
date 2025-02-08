@@ -19,7 +19,7 @@ class CartCard extends StatelessWidget {
         shape: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(10)),
-        contentPadding: EdgeInsets.all(16),
+        contentPadding: const EdgeInsets.all(16),
         tileColor: Colors.white,
         leading: Image.asset(image),
         title: Text(name),
@@ -27,7 +27,7 @@ class CartCard extends StatelessWidget {
         trailing: IconButton(
           onPressed: () =>
               Provider.of<Cart>(context, listen: false).deleteFromCart(name),
-          icon: Icon(
+          icon: const Icon(
             Icons.delete,
             color: Colors.red,
           ),
