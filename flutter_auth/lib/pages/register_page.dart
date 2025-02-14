@@ -1,6 +1,6 @@
-import 'package:authenication/components/my_button.dart';
-import 'package:authenication/components/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/components/my_button.dart';
+import 'package:flutter_auth/components/text_field.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -82,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 25,
             ),
-            MyButton(onTap: () => () {}, text: "Register"),
+            MyButton(onTap: () => {}, text: "Register"),
             const SizedBox(
               height: 20,
             ),

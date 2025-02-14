@@ -1,20 +1,18 @@
-import 'package:authenication/components/my_button.dart';
-import 'package:authenication/components/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/components/my_button.dart';
+import 'package:flutter_auth/components/text_field.dart';
 
-class RegisterPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   final void Function()? onTap;
-  const RegisterPage({super.key, this.onTap});
+  const LoginPage({super.key, this.onTap});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final email = TextEditingController();
   final password = TextEditingController();
-  final username = TextEditingController();
-  final cfPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +36,6 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 45,
             ),
             MyTextField(
-                controller: username,
-                hintText: "Username",
-                onTap: () {},
-                obscureText: false),
-            const SizedBox(
-              height: 10,
-            ),
-            MyTextField(
                 controller: email,
                 hintText: "Email",
                 onTap: () {},
@@ -56,14 +46,6 @@ class _RegisterPageState extends State<RegisterPage> {
             MyTextField(
                 controller: password,
                 hintText: "Password",
-                onTap: () {},
-                obscureText: true),
-            const SizedBox(
-              height: 10,
-            ),
-            MyTextField(
-                controller: cfPassword,
-                hintText: "Confirm Password",
                 onTap: () {},
                 obscureText: true),
             const SizedBox(
@@ -82,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 25,
             ),
-            MyButton(onTap: () => () {}, text: "Register"),
+            MyButton(onTap: () => {}, text: "Login"),
             const SizedBox(
               height: 20,
             ),
@@ -90,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Already have an account?",
+                  "Dont have an account?",
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.secondary),
                 ),
