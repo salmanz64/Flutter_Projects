@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final void Function()? onTap;
+  LoginPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -157,11 +158,14 @@ class LoginPage extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            "Register",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
+                          GestureDetector(
+                            onTap: onTap,
+                            child: Text(
+                              "Register",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           )
                         ],
                       )

@@ -1,7 +1,38 @@
+import 'package:auth_test/components/displayError.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+  final void Function()? onTap;
+  SignUpPage({super.key, required this.onTap});
+
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  TextEditingController cfPass = TextEditingController();
+
+  void registerUser(context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    if (pass.text != cfPass.text || pass.text.isEmpty || email.text.isEmpty) {
+      Navigator.of(context).pop();
+      displayErrorMessage("Not Match", context);
+      return;
+    }
+    try {
+      UserCredential? userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: email.text, password: pass.text);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      displayErrorMessage(e.code, context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +47,9 @@ class SignUpPage extends StatelessWidget {
           child: Column(
             children: [
               Image.asset(
-                'lib/assets/child_1.png',
+                'lib/assets/child_2.png',
                 alignment: Alignment.center,
-                width: screenWidth - 100,
+                width: screenWidth - 160,
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -31,7 +62,7 @@ class SignUpPage extends StatelessWidget {
                         height: screenHeight * 0.03,
                       ),
                       Text(
-                        "Login",
+                        "Sign Up",
                         style: TextStyle(
                             fontSize: 35, fontWeight: FontWeight.bold),
                       ),
@@ -49,6 +80,7 @@ class SignUpPage extends StatelessWidget {
                           ),
                           Expanded(
                               child: TextField(
+                            controller: email,
                             decoration: InputDecoration(hintText: "Email ID"),
                           ))
                         ],
@@ -65,7 +97,11 @@ class SignUpPage extends StatelessWidget {
                           SizedBox(
                             width: screenWidth * 0.03,
                           ),
-                          Expanded(child: TextField())
+                          Expanded(
+                              child: TextField(
+                            controller: pass,
+                            decoration: InputDecoration(hintText: "Password"),
+                          ))
                         ],
                       ),
                       SizedBox(
@@ -74,7 +110,7 @@ class SignUpPage extends StatelessWidget {
                       Row(
                         children: [
                           Icon(
-                            Icons.alternate_email,
+                            Icons.password,
                             color: Colors.grey,
                           ),
                           SizedBox(
@@ -82,12 +118,14 @@ class SignUpPage extends StatelessWidget {
                           ),
                           Expanded(
                               child: TextField(
-                            decoration: InputDecoration(hintText: "Email ID"),
+                            controller: cfPass,
+                            decoration:
+                                InputDecoration(hintText: "Confirm Password"),
                           ))
                         ],
                       ),
                       SizedBox(
-                        height: screenHeight * 0.02,
+                        height: screenHeight * 0.04,
                       ),
                       RichText(
                         text: TextSpan(
@@ -108,23 +146,41 @@ class SignUpPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: screenHeight * 0.03,
+                        height: screenHeight * 0.04,
                       ),
-                      Container(
-                        height: 60,
-                        width: double.infinity - 100,
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                            child: Text(
-                          "Login",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        )),
+                      GestureDetector(
+                        onTap: () => registerUser(context),
+                        child: Container(
+                          height: 60,
+                          width: double.infinity - 100,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )),
+                        ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: screenHeight * 0.03,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Joined Us before? "),
+                          GestureDetector(
+                            onTap: onTap,
+                            child: Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 ),
