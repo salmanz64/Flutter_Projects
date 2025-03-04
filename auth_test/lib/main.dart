@@ -1,7 +1,7 @@
+import 'package:auth_test/auth/isalreadylogged.dart';
 import 'package:auth_test/auth/login_or_register.dart';
 import 'package:auth_test/firebase_options.dart';
-import 'package:auth_test/pages/login_page.dart';
-import 'package:auth_test/pages/sign_up_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginOrRegister(),
+      home: Isalreadylogged(),
     );
   }
 }

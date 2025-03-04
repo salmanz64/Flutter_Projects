@@ -1,8 +1,35 @@
+import 'package:auth_test/components/displayError.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   final void Function()? onTap;
   LoginPage({super.key, required this.onTap});
+
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
+  void loginUser(context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    if (pass.text.isEmpty || email.text.isEmpty) {
+      Navigator.of(context).pop();
+      displayErrorMessage("Not Match", context);
+      return;
+    }
+    try {
+      UserCredential? userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email.text, password: pass.text);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      displayErrorMessage(e.code, context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +77,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           Expanded(
                               child: TextField(
+                            controller: email,
                             decoration: InputDecoration(hintText: "Email ID"),
                           ))
                         ],
@@ -66,7 +94,10 @@ class LoginPage extends StatelessWidget {
                           SizedBox(
                             width: screenWidth * 0.03,
                           ),
-                          Expanded(child: TextField())
+                          Expanded(
+                              child: TextField(
+                            controller: pass,
+                          ))
                         ],
                       ),
                       SizedBox(
@@ -83,17 +114,20 @@ class LoginPage extends StatelessWidget {
                       SizedBox(
                         height: screenHeight * 0.03,
                       ),
-                      Container(
-                        height: 60,
-                        width: double.infinity - 100,
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                            child: Text(
-                          "Login",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        )),
+                      GestureDetector(
+                        onTap: () => loginUser(context),
+                        child: Container(
+                          height: 60,
+                          width: double.infinity - 100,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -134,10 +168,6 @@ class LoginPage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.network(
-                                'http://pngimg.com/uploads/google/google_PNG19635.png',
-                                width: 50,
-                                fit: BoxFit.cover),
                             SizedBox(
                               width: 10,
                             ),
