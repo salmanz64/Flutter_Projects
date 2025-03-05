@@ -1,19 +1,18 @@
+import 'package:bubble_tea_app/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
-  void logOut() {
-    FirebaseAuth.instance.signOut();
-  }
+  final auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
-            onTap: () => logOut(), child: Icon(Icons.exit_to_app)),
+            onTap: () => auth.logOut(), child: Icon(Icons.exit_to_app)),
       ),
     );
   }

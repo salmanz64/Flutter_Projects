@@ -1,3 +1,4 @@
+import 'package:bubble_tea_app/auth/auth_service.dart';
 import 'package:bubble_tea_app/components/alert_message.dart';
 import 'package:bubble_tea_app/components/my_button.dart';
 import 'package:bubble_tea_app/components/my_textfield.dart';
@@ -11,6 +12,7 @@ class RegisterPage extends StatelessWidget {
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController cfpass = TextEditingController();
+  final auth = AuthService();
 
   void checkCredentials(context) async {
     showDialog(
@@ -27,15 +29,7 @@ class RegisterPage extends StatelessWidget {
       Navigator.pop(context);
       displayErrorMessage(context, "Password does not match");
     } else {
-      try {
-        UserCredential? userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: email.text, password: pass.text);
-        Navigator.pop(context);
-      } on FirebaseAuthException catch (e) {
-        Navigator.pop(context);
-        displayErrorMessage(context, e.message);
-      }
+      auth.registerEmailAndPassword(context, email.text, pass.text);
     }
   }
 

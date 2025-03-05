@@ -1,3 +1,4 @@
+import 'package:bubble_tea_app/auth/auth_service.dart';
 import 'package:bubble_tea_app/components/alert_message.dart';
 import 'package:bubble_tea_app/components/my_button.dart';
 import 'package:bubble_tea_app/components/my_textfield.dart';
@@ -11,6 +12,7 @@ class LoginPage extends StatelessWidget {
 
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
+  final auth = AuthService();
 
   void checkCredentials(context) async {
     showDialog(
@@ -24,14 +26,7 @@ class LoginPage extends StatelessWidget {
       Navigator.pop(context);
       displayErrorMessage(context, "Pass or Email Is Empty");
     } else {
-      try {
-        UserCredential? userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email.text, password: pass.text);
-        Navigator.pop(context);
-      } on FirebaseAuthException catch (e) {
-        Navigator.pop(context);
-        displayErrorMessage(context, e.message);
-      }
+      auth.verifyEmailAndPass(context, email.text, pass.text);
     }
   }
 
@@ -116,12 +111,16 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: height * 0.04,
             ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white),
-              child: Image.asset(
-                "lib/assets/google.png",
-                width: width * 0.18,
+            GestureDetector(
+              onTap: () => auth.signInWithGoogle(),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white),
+                child: Image.asset(
+                  "lib/assets/google.png",
+                  width: width * 0.18,
+                ),
               ),
             ),
             SizedBox(
