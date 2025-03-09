@@ -1,4 +1,5 @@
 import 'package:bubble_tea_app/auth/loginorRegister.dart';
+import 'package:bubble_tea_app/pages/home_or_cart.dart';
 import 'package:bubble_tea_app/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class Authpage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomePage();
+            return HomeOrCart();
           } else {
             return Loginorregister();
           }
