@@ -36,9 +36,7 @@ class HomePage extends StatelessWidget {
                     itemCount: value.items.length,
                     itemBuilder: (context, index) {
                       return ItemCard(
-                        img: value.items[index].img,
-                        name: value.items[index].itemName,
-                        price: value.items[index].price,
+                        drink: value.items[index],
                       );
                     },
                   ),

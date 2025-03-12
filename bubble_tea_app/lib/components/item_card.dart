@@ -1,12 +1,10 @@
+import 'package:bubble_tea_app/model/drink.dart';
 import 'package:bubble_tea_app/pages/item_page.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
-  String name;
-  double price;
-  String img;
-  ItemCard(
-      {super.key, required this.img, required this.price, required this.name});
+  Drink drink;
+  ItemCard({super.key, required this.drink});
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +15,23 @@ class ItemCard extends StatelessWidget {
             color: Colors.brown[700], borderRadius: BorderRadius.circular(10)),
         child: ListTile(
           leading: Image.asset(
-            img,
+            drink.img,
           ),
           title: Text(
-            name,
+            drink.itemName,
             style: TextStyle(color: Colors.white),
           ),
           subtitle: Text(
-            '\$${price.toString()}',
+            '\$${drink.price.toString()}',
             style: TextStyle(color: Colors.white),
           ),
           trailing: IconButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ItemPage(drink: ),)),
-              },color: Colors.white,
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ItemPage(drink: drink),
+                ));
+              },
+              color: Colors.white,
               icon: Icon(Icons.arrow_right_alt_outlined)),
         ),
       ),
