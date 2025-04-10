@@ -17,7 +17,11 @@ class HomePage extends StatelessWidget {
             height: height * 0.09,
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return DateTile(isActive: index == 2);
+                return DateTile(
+                  isActive: index == 2,
+                  width: width * 0.13,
+                  height: height * 0.07,
+                );
               },
               itemCount: 20,
               scrollDirection: Axis.horizontal,

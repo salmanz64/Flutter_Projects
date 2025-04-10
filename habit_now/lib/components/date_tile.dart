@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 
 class DateTile extends StatelessWidget {
   bool isActive;
-  DateTile({super.key, required this.isActive});
+  double height, width;
+  DateTile({
+    super.key,
+    required this.isActive,
+    required this.height,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
       child: Container(
-        width: width * 0.13,
-        height: height * 0.07,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: isActive ? Colors.blue : Colors.black,
           borderRadius: BorderRadius.circular(14),

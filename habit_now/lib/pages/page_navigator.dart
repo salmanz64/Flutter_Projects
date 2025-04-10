@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/pages/habit_page.dart';
 import 'package:habit_now/pages/home_page.dart';
+import 'package:habit_now/pages/timer_page.dart';
 import 'package:habit_now/styles/text_styles.dart';
 
-class PageNavigator extends StatelessWidget {
-  const PageNavigator({super.key});
+class PageNavigator extends StatefulWidget {
+  PageNavigator({super.key});
+
+  @override
+  State<PageNavigator> createState() => _PageNavigatorState();
+}
+
+class _PageNavigatorState extends State<PageNavigator> {
+  int _selectIndex = 0;
+
+  List pages = [HomePage(), HabitPage(), TimerPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +123,27 @@ class PageNavigator extends StatelessWidget {
           ],
         ),
       ),
-      body: HomePage(),
+      body: pages[_selectIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectIndex,
+        onTap: (value) {
+          setState(() {
+            _selectIndex = value;
+          });
+        },
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.white,
+        backgroundColor: Colors.black,
+
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.today), label: "Today"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_symbols_sharp),
+            label: "Habits",
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.timer), label: "Timer"),
+        ],
+      ),
     );
   }
 }
