@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/pages/Add%20Habit/category_page.dart';
+import 'package:habit_now/pages/Add%20Habit/habit_detail_page.dart';
 import 'package:habit_now/pages/page_navigator.dart';
 
 void main() {
@@ -12,7 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PageNavigator(),
+      theme: ThemeData(textTheme: TextTheme()),
+      home: HabitDetailPage(),
     );
   }
 }
