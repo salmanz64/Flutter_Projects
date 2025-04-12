@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/utils/categories.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class HabitTile extends StatelessWidget {
+  String name;
+  String category;
+
   /* 0 for not done yet 
      1 for it is past and yet not checked
      2 for not done
      3 for done
   */
   int isDone;
-  HabitTile({super.key, required this.isDone});
+  HabitTile({
+    super.key,
+    required this.isDone,
+    required this.category,
+    required this.name,
+  });
 
   final isDone_Icon = {
     0: Text(""),
@@ -31,15 +40,28 @@ class HabitTile extends StatelessWidget {
           ),
           padding: EdgeInsets.all(10),
 
-          child: Icon(Icons.brush, color: Colors.red),
+          child: Icon(
+            categories.firstWhere(
+              (element) => element['name'] == category,
+            )['icon'],
+            color:
+                categories.firstWhere(
+                  (element) => element['name'] == category,
+                )['color'],
+          ),
         ),
-        title: Text(
-          "Learn Something new",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text(name, style: TextStyle(color: Colors.white)),
         subtitle: Row(
           children: [
-            Text("10P", style: TextStyle(color: Colors.red)),
+            Text(
+              "10P",
+              style: TextStyle(
+                color:
+                    categories.firstWhere(
+                      (element) => element['name'] == category,
+                    )['color'],
+              ),
+            ),
             SizedBox(width: width * 0.03),
             Icon(Icons.notifications_none, color: Colors.grey, size: 16),
             SizedBox(width: width * 0.01),

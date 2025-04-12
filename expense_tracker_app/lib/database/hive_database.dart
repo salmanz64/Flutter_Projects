@@ -45,9 +45,9 @@ class HiveDatabase {
     List<ExpenseItem> originalList = [];
 
     for (int i = 0; i < convertedList.length; i++) {
-      String itemName = convertedList[i][0];
+      String itemName = convertedList[i][0]; 
       double amount = convertedList[i][1];
-      DateTime date = convertedList[i][2];
+      DateTime date = convertedList[i][2]; 
 
       originalList.add(
         ExpenseItem(name: itemName, amount: amount, dateTime: date),

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
+import 'package:habit_now/utils/categories.dart';
 
 class HabitDetails extends StatelessWidget {
-  const HabitDetails({super.key});
+  final String category;
+  final int isDone;
+  final String name;
+
+  HabitDetails({
+    super.key,
+    required this.category,
+    required this.isDone,
+    required this.name,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +48,10 @@ class HabitDetails extends StatelessWidget {
                         width: width * 0.01,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color:
+                                categories.firstWhere(
+                                  (element) => element['name'] == category,
+                                )['color'],
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
@@ -48,7 +61,7 @@ class HabitDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Check Spending",
+                            name,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -57,7 +70,12 @@ class HabitDetails extends StatelessWidget {
                           ),
                           Text(
                             "Every Day | 10P",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(
+                              color:
+                                  categories.firstWhere(
+                                    (element) => element['name'] == category,
+                                  )['color'],
+                            ),
                           ),
                         ],
                       ),
@@ -70,7 +88,15 @@ class HabitDetails extends StatelessWidget {
                     ),
                     padding: EdgeInsets.all(10),
 
-                    child: Icon(Icons.brush, color: Colors.red),
+                    child: Icon(
+                      categories.firstWhere(
+                        (element) => element['name'] == category,
+                      )['icon'],
+                      color:
+                          categories.firstWhere(
+                            (element) => element['name'] == category,
+                          )['color'],
+                    ),
                   ),
                 ],
               ),
@@ -97,11 +123,23 @@ class HabitDetails extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.line_axis, color: Colors.red),
+                      Icon(
+                        Icons.line_axis,
+                        color:
+                            categories.firstWhere(
+                              (element) => element['name'] == category,
+                            )['color'],
+                      ),
                       SizedBox(width: width * 0.01),
                       Text("1", style: TextStyle(color: Colors.white)),
                       SizedBox(width: width * 0.03),
-                      Icon(Icons.check_circle_outline, color: Colors.red),
+                      Icon(
+                        Icons.check_circle_outline,
+                        color:
+                            categories.firstWhere(
+                              (element) => element['name'] == category,
+                            )['color'],
+                      ),
                       SizedBox(width: width * 0.01),
                       Text("100%", style: TextStyle(color: Colors.white)),
                     ],

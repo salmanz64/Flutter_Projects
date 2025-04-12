@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/pages/Add%20Habit/category_page.dart';
 import 'package:habit_now/pages/habit_page.dart';
 import 'package:habit_now/pages/home_page.dart';
 import 'package:habit_now/pages/timer_page.dart';
@@ -143,6 +144,15 @@ class _PageNavigatorState extends State<PageNavigator> {
           ),
           BottomNavigationBarItem(icon: Icon(Icons.timer), label: "Timer"),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => CategoryPage()));
+        },
+        backgroundColor: Colors.blue,
+        child: Icon(Icons.add, color: Colors.white, size: 30),
       ),
     );
   }

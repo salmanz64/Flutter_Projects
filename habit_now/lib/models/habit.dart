@@ -4,17 +4,17 @@ class Habit {
   final String category;
   final String title;
   final String description;
-  final int priority;
-  final DateTime date;
-  final DateTime time;
+  int priority;
+  final List dates;
+  final int time;
   final int isDone = 0;
 
   Habit({
     required this.category,
     required this.title,
     required this.description,
-    required this.priority,
-    required this.time,
-    required this.date,
+    this.priority = 0,
+    this.time = 0,
+    required this.dates,
   });
 }

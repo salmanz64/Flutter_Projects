@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
 import 'package:habit_now/components/habit_tile.dart';
+import 'package:habit_now/database/habit_data.dart';
+import 'package:habit_now/models/habit.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -30,10 +33,19 @@ class HomePage extends StatelessWidget {
           SizedBox(height: height * 0.02),
           SizedBox(
             height: height,
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                return HabitTile(isDone: 3);
+            child: Consumer<HabitData>(
+              builder: (context, value, child) {
+                return ListView.builder(
+                  itemCount: value.overallHabits.length,
+                  itemBuilder: (context, index) {
+                    Habit element = value.overallHabits[index];
+                    return HabitTile(
+                      isDone: element.isDone,
+                      category: element.category,
+                      name: element.title,
+                    );
+                  },
+                );
               },
             ),
           ),

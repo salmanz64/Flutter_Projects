@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/pages/Add%20Habit/habit_detail_page.dart';
 import 'package:habit_now/utils/categories.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -24,28 +25,39 @@ class CategoryPage extends StatelessWidget {
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  categories[index]['name'],
-                  style: TextStyle(color: Colors.white),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white10,
-                    borderRadius: BorderRadius.circular(10),
+          return GestureDetector(
+            onTap:
+                () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder:
+                        (context) => HabitDetailPage(
+                          category: categories[index]['name'],
+                        ),
                   ),
-                  padding: EdgeInsets.all(10),
+                ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    categories[index]['name'],
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.all(10),
 
-                  child: Icon(
-                    categories[index]['icon'],
-                    color: categories[index]['color'],
+                    child: Icon(
+                      categories[index]['icon'],
+                      color: categories[index]['color'],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
