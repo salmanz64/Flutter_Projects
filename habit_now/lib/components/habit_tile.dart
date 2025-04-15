@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/utils/categories.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class HabitTile extends StatelessWidget {
+class HabitTile extends StatefulWidget {
   String name;
   String category;
 
@@ -19,11 +19,16 @@ class HabitTile extends StatelessWidget {
     required this.name,
   });
 
+  @override
+  State<HabitTile> createState() => _HabitTileState();
+}
+
+class _HabitTileState extends State<HabitTile> {
   final isDone_Icon = {
     0: Text(""),
-    1: Icon(Icons.timelapse, color: Colors.yellow),
+    1: Icon(Icons.check, color: Colors.green),
     2: Icon(Icons.close_outlined, color: Colors.red),
-    3: Icon(Icons.check, color: Colors.green),
+    3: Icon(Icons.timelapse, color: Colors.yellow),
   };
 
   @override
@@ -42,15 +47,15 @@ class HabitTile extends StatelessWidget {
 
           child: Icon(
             categories.firstWhere(
-              (element) => element['name'] == category,
+              (element) => element['name'] == widget.category,
             )['icon'],
             color:
                 categories.firstWhere(
-                  (element) => element['name'] == category,
+                  (element) => element['name'] == widget.category,
                 )['color'],
           ),
         ),
-        title: Text(name, style: TextStyle(color: Colors.white)),
+        title: Text(widget.name, style: TextStyle(color: Colors.white)),
         subtitle: Row(
           children: [
             Text(
@@ -58,7 +63,7 @@ class HabitTile extends StatelessWidget {
               style: TextStyle(
                 color:
                     categories.firstWhere(
-                      (element) => element['name'] == category,
+                      (element) => element['name'] == widget.category,
                     )['color'],
               ),
             ),
@@ -68,13 +73,20 @@ class HabitTile extends StatelessWidget {
             Text("05:30", style: TextStyle(color: Colors.grey)),
           ],
         ),
-        trailing: Container(
-          width: width * 0.09,
-          height: height * 0.09,
-          child: isDone_Icon[isDone],
-          decoration: BoxDecoration(
-            color: Colors.white10,
-            shape: BoxShape.circle,
+        trailing: GestureDetector(
+          onTap: () {
+            setState(() {
+              widget.isDone = (widget.isDone + 1) % 3;
+            });
+          },
+          child: Container(
+            width: width * 0.09,
+            height: height * 0.09,
+            child: isDone_Icon[widget.isDone],
+            decoration: BoxDecoration(
+              color: Colors.white10,
+              shape: BoxShape.circle,
+            ),
           ),
         ),
       ),

@@ -6,7 +6,11 @@ class HabitData extends ChangeNotifier {
 
   void addHabit(Habit hb) {
     overallHabits.add(hb);
+    notifyListeners();
+  }
 
+  void deleteHabit(String name) {
+    overallHabits.removeWhere((element) => element.title == name);
     notifyListeners();
   }
 }

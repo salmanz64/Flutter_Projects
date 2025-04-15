@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
+import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/utils/categories.dart';
 
 class HabitDetails extends StatelessWidget {
-  final String category;
-  final int isDone;
-  final String name;
+  final void Function(Habit) onTap;
+  final Habit hb;
 
-  HabitDetails({
-    super.key,
-    required this.category,
-    required this.isDone,
-    required this.name,
-  });
+  HabitDetails({super.key, required this.onTap, required this.hb});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +45,7 @@ class HabitDetails extends StatelessWidget {
                           decoration: BoxDecoration(
                             color:
                                 categories.firstWhere(
-                                  (element) => element['name'] == category,
+                                  (element) => element['name'] == hb.category,
                                 )['color'],
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -61,7 +56,7 @@ class HabitDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name,
+                            hb.title,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -73,7 +68,7 @@ class HabitDetails extends StatelessWidget {
                             style: TextStyle(
                               color:
                                   categories.firstWhere(
-                                    (element) => element['name'] == category,
+                                    (element) => element['name'] == hb.category,
                                   )['color'],
                             ),
                           ),
@@ -90,11 +85,11 @@ class HabitDetails extends StatelessWidget {
 
                     child: Icon(
                       categories.firstWhere(
-                        (element) => element['name'] == category,
+                        (element) => element['name'] == hb.category,
                       )['icon'],
                       color:
                           categories.firstWhere(
-                            (element) => element['name'] == category,
+                            (element) => element['name'] == hb.category,
                           )['color'],
                     ),
                   ),
@@ -127,7 +122,7 @@ class HabitDetails extends StatelessWidget {
                         Icons.line_axis,
                         color:
                             categories.firstWhere(
-                              (element) => element['name'] == category,
+                              (element) => element['name'] == hb.category,
                             )['color'],
                       ),
                       SizedBox(width: width * 0.01),
@@ -137,7 +132,7 @@ class HabitDetails extends StatelessWidget {
                         Icons.check_circle_outline,
                         color:
                             categories.firstWhere(
-                              (element) => element['name'] == category,
+                              (element) => element['name'] == hb.category,
                             )['color'],
                       ),
                       SizedBox(width: width * 0.01),
@@ -147,7 +142,12 @@ class HabitDetails extends StatelessWidget {
                   Row(
                     children: [
                       Icon(Icons.stacked_bar_chart, color: Colors.white),
-                      Icon(Icons.more_vert, color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          onTap(hb);
+                        },
+                        child: Icon(Icons.more_vert, color: Colors.white),
+                      ),
                     ],
                   ),
                 ],

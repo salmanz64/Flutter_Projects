@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:habit_now/components/habit_details.dart';
 import 'package:habit_now/database/habit_data.dart';
@@ -5,7 +7,8 @@ import 'package:habit_now/models/habit.dart';
 import 'package:provider/provider.dart';
 
 class HabitPage extends StatelessWidget {
-  HabitPage({super.key});
+  final void Function(Habit) onTap;
+  HabitPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +24,7 @@ class HabitPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   Habit element = value.overallHabits[index];
 
-                  return HabitDetails(
-                    category: element.category,
-                    name: element.title,
-                    isDone: element.isDone,
-                  );
+                  return HabitDetails(onTap: onTap, hb: element);
                 },
               );
             },

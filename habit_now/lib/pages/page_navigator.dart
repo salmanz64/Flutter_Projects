@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/database/habit_data.dart';
+import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/pages/Add%20Habit/category_page.dart';
 import 'package:habit_now/pages/habit_page.dart';
 import 'package:habit_now/pages/home_page.dart';
 import 'package:habit_now/pages/timer_page.dart';
 import 'package:habit_now/styles/text_styles.dart';
+import 'package:provider/provider.dart';
 
 class PageNavigator extends StatefulWidget {
+  Habit? hb;
   PageNavigator({super.key});
 
   @override
@@ -13,9 +17,27 @@ class PageNavigator extends StatefulWidget {
 }
 
 class _PageNavigatorState extends State<PageNavigator> {
+  bool showOption = false;
   int _selectIndex = 0;
 
-  List pages = [HomePage(), HabitPage(), TimerPage()];
+  late List pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      HomePage(),
+      HabitPage(onTap: displayOption), // Now works
+      TimerPage(),
+    ];
+  }
+
+  void displayOption(Habit targethb) {
+    setState(() {
+      widget.hb = targethb;
+      showOption = !showOption;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +45,47 @@ class _PageNavigatorState extends State<PageNavigator> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      bottomSheet:
+          showOption
+              ? Container(
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.edit, color: Colors.blue),
+                          SizedBox(width: 20),
+                          Text("Edit"),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: () {
+                          Provider.of<HabitData>(
+                            context,
+                            listen: false,
+                          ).deleteHabit(widget.hb!.title);
+
+                          setState(() {
+                            showOption = !showOption;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.delete, color: Colors.blue),
+                            SizedBox(width: 20),
+                            Text("Delete"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              : SizedBox(),
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,

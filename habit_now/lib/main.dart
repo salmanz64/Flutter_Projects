@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/pages/Add%20Habit/category_page.dart';
 import 'package:habit_now/pages/Add%20Habit/habit_detail_page.dart';
+import 'package:habit_now/pages/Edit%20Habit/edit_page.dart';
 import 'package:habit_now/pages/page_navigator.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        iconTheme: IconThemeData(color: Colors.blue),
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
           titleSmall: TextStyle(color: Colors.white),
         ),
       ),
-      home: PageNavigator(),
+      home: EditPage(),
     );
   }
 }
