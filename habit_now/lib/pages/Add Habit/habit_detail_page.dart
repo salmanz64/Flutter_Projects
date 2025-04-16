@@ -17,6 +17,7 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
   TextEditingController _descriptionController = TextEditingController();
   String _selectedDate = "Every Day";
   bool isSomeDays = false;
+  //from monday
   List isDay = [false, false, false, false, false, false, false];
 
   @override

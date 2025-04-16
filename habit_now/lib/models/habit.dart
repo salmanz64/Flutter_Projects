@@ -1,9 +1,9 @@
 import 'dart:ffi';
 
 class Habit {
-  final String category;
-  final String title;
-  final String description;
+  String category;
+  String title;
+  String description;
   int priority;
   final List dates;
   final int time;

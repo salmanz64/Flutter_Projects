@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           titleSmall: TextStyle(color: Colors.white),
         ),
       ),
-      home: EditPage(),
+      home: PageNavigator(),
     );
   }
 }

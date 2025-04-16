@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/pages/Add%20Habit/habit_detail_page.dart';
 import 'package:habit_now/utils/categories.dart';
 
-class EditPage extends StatelessWidget {
-  EditPage({super.key});
+class EditPage extends StatefulWidget {
+  Habit? hb;
+  EditPage({super.key, required this.hb});
 
-  TextEditingController ed = TextEditingController();
+  @override
+  State<EditPage> createState() => _EditPageState();
+}
+
+class _EditPageState extends State<EditPage> {
+  late TextEditingController ed;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    ed = TextEditingController(text: widget.hb!.title);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +54,13 @@ class EditPage extends StatelessWidget {
                             },
                             child: Text("Cancel"),
                           ),
-                          ElevatedButton(onPressed: () {}, child: Text("Ok")),
+                          ElevatedButton(
+                            onPressed: () {
+                              widget.hb!.title = ed.text;
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Save"),
+                          ),
                         ],
                       );
                     },
@@ -79,15 +99,14 @@ class EditPage extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onTap:
-                                        () => Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) => HabitDetailPage(
-                                                  category:
-                                                      categories[index]['name'],
-                                                ),
-                                          ),
-                                        ),
+                                        () => {
+                                          setState(() {
+                                            widget.hb!.category =
+                                                categories[index]['name'];
+                                          }),
+
+                                          Navigator.of(context).pop(),
+                                        },
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
@@ -133,7 +152,7 @@ class EditPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text("Finance"),
+                      Text(widget.hb!.category),
                       SizedBox(width: 10),
                       Icon(Icons.money),
                     ],

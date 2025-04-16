@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/pages/Add%20Habit/category_page.dart';
+import 'package:habit_now/pages/Edit%20Habit/edit_page.dart';
 import 'package:habit_now/pages/habit_page.dart';
 import 'package:habit_now/pages/home_page.dart';
 import 'package:habit_now/pages/timer_page.dart';
@@ -54,12 +55,21 @@ class _PageNavigatorState extends State<PageNavigator> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        children: [
-                          Icon(Icons.edit, color: Colors.blue),
-                          SizedBox(width: 20),
-                          Text("Edit"),
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => EditPage(hb: widget.hb),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.edit, color: Colors.blue),
+                            SizedBox(width: 20),
+                            Text("Edit"),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 20),
                       GestureDetector(

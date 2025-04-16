@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/utils/categories.dart';
+import 'package:intl/intl.dart';
 
 class HabitDetails extends StatelessWidget {
   final void Function(Habit) onTap;
   final Habit hb;
+  DateTime date = DateTime.now().subtract(Duration(days: 2));
 
   HabitDetails({super.key, required this.onTap, required this.hb});
 
@@ -101,7 +103,13 @@ class HabitDetails extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: 7,
                   itemBuilder: (context, index) {
+                    DateTime days = date.add(Duration(days: index));
+                    String dayOfWeek = DateFormat('E').format(days);
+                    String dayOfMonth = DateFormat('d').format(days);
+
                     return DateTile(
+                      dayOfMonth: dayOfMonth,
+                      dayOfWeek: dayOfWeek,
                       isActive: false,
                       height: height * 0.08,
                       width: width * 0.1,

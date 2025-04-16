@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class DateTile extends StatelessWidget {
   bool isActive;
   double height, width;
+  String dayOfWeek;
+  String dayOfMonth;
   DateTile({
     super.key,
     required this.isActive,
     required this.height,
     required this.width,
+    required this.dayOfMonth,
+    required this.dayOfWeek,
   });
 
   @override
@@ -25,7 +29,7 @@ class DateTile extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Text("Sun", style: TextStyle(color: Colors.white)),
+              child: Text(dayOfWeek, style: TextStyle(color: Colors.white)),
             ),
             Expanded(
               child: Container(
@@ -42,7 +46,7 @@ class DateTile extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "22",
+                        dayOfMonth,
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),

@@ -1,9 +1,1 @@
-List days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+List days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
