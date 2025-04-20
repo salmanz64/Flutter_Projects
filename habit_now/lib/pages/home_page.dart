@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
 import 'package:habit_now/components/habit_tile.dart';
 import 'package:habit_now/database/habit_data.dart';
+import 'package:habit_now/models/daySummary.dart';
 import 'package:habit_now/models/habit.dart';
+import 'package:habit_now/models/habitStatus.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -14,17 +16,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DateTime date = DateTime.now().subtract(Duration(days: 2));
+  DateTime date = DateTime.now();
 
   late String selectedDay;
   @override
   void initState() {
     // TODO: implement initState
-    selectedDay = DateFormat('d').format(date);
+    selectedDay = DateFormat('E').format(date);
+
+    Provider.of<HabitData>(context, listen: false).doSomeDaySummary();
     super.initState();
   }
 
-  int selectedIndex = 2;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,7 @@ class _HomePageState extends State<HomePage> {
                 DateTime days = date.add(Duration(days: index));
                 String dayOfWeek = DateFormat('E').format(days);
                 String dayOfMonth = DateFormat('d').format(days);
+
                 return GestureDetector(
                   onTap: () {
                     setState(() {
@@ -57,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              itemCount: 20,
+              itemCount: 15,
               scrollDirection: Axis.horizontal,
             ),
           ),
@@ -67,16 +72,19 @@ class _HomePageState extends State<HomePage> {
             child: Consumer<HabitData>(
               builder: (context, value, child) {
                 return ListView.builder(
-                  itemCount: value.overallHabits.length,
+                  shrinkWrap: true,
+                  itemCount:
+                      selectedIndex < value.overallDaySummary.length
+                          ? value.overallDaySummary[selectedIndex].habits.length
+                          : 0,
                   itemBuilder: (context, index) {
-                    Habit element = value.overallHabits[index];
-                    if (value.getDate(element, selectedDay)) {
-                      return HabitTile(
-                        isDone: element.isDone,
-                        category: element.category,
-                        name: element.title,
-                      );
-                    }
+                    HabitStatus element =
+                        value.overallDaySummary[selectedIndex].habits[index];
+
+                    return HabitTile(
+                      hbs: element,
+                      date: value.overallDaySummary[selectedIndex].date,
+                    );
                   },
                 );
               },

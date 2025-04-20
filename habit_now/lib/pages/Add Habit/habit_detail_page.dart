@@ -15,6 +15,7 @@ class HabitDetailPage extends StatefulWidget {
 class _HabitDetailPageState extends State<HabitDetailPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TimeOfDay? picked;
   String _selectedDate = "Every Day";
   bool isSomeDays = false;
   //from monday
@@ -136,7 +137,15 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                     ],
                   ),
 
-                  Text("0", style: TextStyle(color: Colors.blue)),
+                  GestureDetector(
+                    onTap: () async {
+                      picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                    },
+                    child: Text("0", style: TextStyle(color: Colors.blue)),
+                  ),
                 ],
               ),
             ),
@@ -169,6 +178,7 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                     category: widget.category,
                     title: _nameController.text,
                     description: _descriptionController.text,
+                    time: picked,
                     dates:
                         _selectedDate == "Every Day"
                             ? List.filled(7, true)
@@ -176,6 +186,10 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                   );
 
                   Provider.of<HabitData>(context, listen: false).addHabit(hb);
+                  Provider.of<HabitData>(
+                    context,
+                    listen: false,
+                  ).doSomeDaySummary();
 
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/database/habit_data.dart';
+import 'package:habit_now/models/habit.dart';
+import 'package:habit_now/models/habitStatus.dart';
 import 'package:habit_now/utils/categories.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:provider/provider.dart';
 
 class HabitTile extends StatefulWidget {
-  String name;
-  String category;
+  HabitStatus hbs;
+  String date;
 
   /* 0 for not done yet 
      1 for it is past and yet not checked
      2 for not done
      3 for done
   */
-  int isDone;
-  HabitTile({
-    super.key,
-    required this.isDone,
-    required this.category,
-    required this.name,
-  });
+
+  HabitTile({super.key, required this.hbs, required this.date});
 
   @override
   State<HabitTile> createState() => _HabitTileState();
@@ -47,15 +46,15 @@ class _HabitTileState extends State<HabitTile> {
 
           child: Icon(
             categories.firstWhere(
-              (element) => element['name'] == widget.category,
+              (element) => element['name'] == widget.hbs.hb.category,
             )['icon'],
             color:
                 categories.firstWhere(
-                  (element) => element['name'] == widget.category,
+                  (element) => element['name'] == widget.hbs.hb.category,
                 )['color'],
           ),
         ),
-        title: Text(widget.name, style: TextStyle(color: Colors.white)),
+        title: Text(widget.hbs.hb.title, style: TextStyle(color: Colors.white)),
         subtitle: Row(
           children: [
             Text(
@@ -63,26 +62,34 @@ class _HabitTileState extends State<HabitTile> {
               style: TextStyle(
                 color:
                     categories.firstWhere(
-                      (element) => element['name'] == widget.category,
+                      (element) => element['name'] == widget.hbs.hb.category,
                     )['color'],
               ),
             ),
             SizedBox(width: width * 0.03),
-            Icon(Icons.notifications_none, color: Colors.grey, size: 16),
+            widget.hbs.hb.time == null
+                ? SizedBox()
+                : Icon(Icons.notifications_none, color: Colors.grey, size: 16),
             SizedBox(width: width * 0.01),
-            Text("05:30", style: TextStyle(color: Colors.grey)),
+            Text(
+              widget.hbs.hb.time?.format(context) ?? "",
+              style: TextStyle(color: Colors.grey),
+            ),
           ],
         ),
         trailing: GestureDetector(
           onTap: () {
             setState(() {
-              widget.isDone = (widget.isDone + 1) % 3;
+              Provider.of<HabitData>(
+                context,
+                listen: false,
+              ).updateStatus(widget.date, widget.hbs.hb.title);
             });
           },
           child: Container(
             width: width * 0.09,
             height: height * 0.09,
-            child: isDone_Icon[widget.isDone],
+            child: isDone_Icon[widget.hbs.isDone],
             decoration: BoxDecoration(
               color: Colors.white10,
               shape: BoxShape.circle,

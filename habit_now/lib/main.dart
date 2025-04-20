@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:habit_now/database/habit_data.dart';
-import 'package:habit_now/pages/Add%20Habit/category_page.dart';
-import 'package:habit_now/pages/Add%20Habit/habit_detail_page.dart';
-import 'package:habit_now/pages/Edit%20Habit/edit_page.dart';
+import 'package:habit_now/notification/notification.dart';
+
 import 'package:habit_now/pages/page_navigator.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensures Flutter is initialized first
+  await initNotifications(); // Initialize notifications
+  tz.initializeTimeZones();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => HabitData(),
