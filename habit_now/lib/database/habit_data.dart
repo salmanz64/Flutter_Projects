@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/models/daySummary.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/models/habitStatus.dart';
-import 'package:habit_now/notification/notification.dart';
+import 'package:habit_now/notification/notify_service.dart';
 import 'package:habit_now/utils/dates.dart';
 import 'package:intl/intl.dart';
 
@@ -14,15 +14,12 @@ class HabitData extends ChangeNotifier {
     overallHabits.add(hb);
 
     if (hb.time != null) {
-      int habitId =
-          DateTime.now()
-              .millisecondsSinceEpoch; // Ensures unique ID based on the current time
-
-      scheduleDailyNotification(
-        hb.time!, // The time you want to send the notification (from Habit model)
-        habitId, // Unique ID for this habit's notification
-        "Habit Reminder", // Title of the notification
-        "Don't forget to do: ${hb.title}", // Body of the notification
+      NotifyService().showNotification(body: "Body", title: "Title");
+      NotifyService().scheduleNotification(
+        title: "Habit Now",
+        body: "The Time has Come to do your habit",
+        hour: hb.time!.hour,
+        minute: hb.time!.minute,
       );
     }
 

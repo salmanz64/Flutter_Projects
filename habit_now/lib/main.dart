@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:habit_now/database/habit_data.dart';
-import 'package:habit_now/notification/notification.dart';
+import 'package:habit_now/notification/notify_service.dart';
 
 import 'package:habit_now/pages/page_navigator.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures Flutter is initialized first
-  await initNotifications(); // Initialize notifications
-  tz.initializeTimeZones();
+  //init Notifications
+  NotifyService().initNotification();
 
   runApp(
     ChangeNotifierProvider(
