@@ -11,18 +11,18 @@ class NotifyService {
   bool get isInitialized => _isInitialized;
 
   Future<void> initNotification() async {
-    if (_isInitialized) return; //prevent re-initialization
+    if (_isInitialized) return; // Prevent re-initialization
 
-    //init timezone handling
+    // Initialize timezone handling
     tz.initializeTimeZones();
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
-    //prepare android init settings
+    // Prepare Android init settings
     const AndroidInitializationSettings initSettingAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    //prepare ios init settings
+    // Prepare iOS init settings
     const DarwinInitializationSettings initSettingsIOS =
         DarwinInitializationSettings(
           requestAlertPermission: true,
@@ -35,11 +35,13 @@ class NotifyService {
       iOS: initSettingsIOS,
     );
 
-    //finally initialize the plugin
+    // Initialize the plugin
     await notificationPlugin.initialize(initSettings);
+
+    _isInitialized = true;
   }
 
-  //Notifications Detail Setup
+  // Notifications Detail Setup
   NotificationDetails notificationDetails() {
     return const NotificationDetails(
       android: AndroidNotificationDetails(
@@ -53,7 +55,7 @@ class NotifyService {
     );
   }
 
-  //Show Notification
+  // Show Notification
   Future<void> showNotification({
     int id = 0,
     String? title,
@@ -72,7 +74,7 @@ class NotifyService {
   }) async {
     final now = tz.TZDateTime.now(tz.local);
 
-    //Create a date?Time for today
+    // Create a date/time for today
     var scheduledDate = tz.TZDateTime(
       tz.local,
       now.year,
@@ -82,7 +84,7 @@ class NotifyService {
       minute,
     );
 
-    //Schedule the notification
+    // Schedule the notification
     await notificationPlugin.zonedSchedule(
       id,
       title,
@@ -90,13 +92,13 @@ class NotifyService {
       scheduledDate,
       notificationDetails(),
 
-      //Ios Specific: USe exact time specified
+      // iOS Specific: Use exact time specified
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
 
-      //Android specific: Allow notification while device in low power mode
+      // Android specific: Allow notification while device is in low power mode
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      //Make notification Daily
+      // Make notification Daily
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }

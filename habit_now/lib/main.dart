@@ -5,10 +5,10 @@ import 'package:habit_now/notification/notify_service.dart';
 import 'package:habit_now/pages/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures Flutter is initialized first
   //init Notifications
-  NotifyService().initNotification();
+  await NotifyService().initNotification();
 
   runApp(
     ChangeNotifierProvider(
