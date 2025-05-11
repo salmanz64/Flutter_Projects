@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 
 class DateTile extends StatelessWidget {
+  int? status;
   bool isActive;
   double height, width;
   String dayOfWeek;
   String dayOfMonth;
+  final statusColor = {
+    0: Colors.grey.shade900,
+    1: const Color.fromARGB(255, 11, 219, 18),
+    2: const Color.fromARGB(255, 205, 27, 15),
+    3: Colors.yellow,
+  };
   DateTile({
     super.key,
+    this.status,
     required this.isActive,
     required this.height,
     required this.width,
@@ -38,7 +46,12 @@ class DateTile extends StatelessWidget {
                     bottom: Radius.circular(15),
                     top: Radius.circular(15),
                   ),
-                  color: (isActive ? Colors.blue[700] : Colors.grey.shade900),
+                  color:
+                      (isActive
+                          ? Colors.blue[700]
+                          : (status != null
+                              ? statusColor[status]
+                              : Colors.grey.shade900)),
                 ),
                 width: double.infinity,
 

@@ -19,6 +19,7 @@ class PageNavigator extends StatefulWidget {
 
 class _PageNavigatorState extends State<PageNavigator> {
   bool showOption = false;
+  bool isSearching = false;
   int _selectIndex = 0;
 
   late List pages;
@@ -97,32 +98,83 @@ class _PageNavigatorState extends State<PageNavigator> {
               )
               : SizedBox(),
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: Builder(
-          builder:
-              (context) => IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: Icon(Icons.menu),
-                color: Colors.blue,
-              ),
-        ),
+      appBar:
+          isSearching
+              ? AppBar(
+                automaticallyImplyLeading: false, // Remove leading icon (menu)
+                backgroundColor: Colors.black,
+                // Remove the default spacing around the title
+                title: SearchBar(
+                  leading: Icon(Icons.search, color: Colors.white),
+                  onChanged: (value) {
+                    Provider.of<HabitData>(
+                      context,
+                      listen: false,
+                    ).filterHabit(value);
+                  },
+                  trailing: [
+                    IconButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          isSearching = !isSearching;
+                        });
+                      },
+                      icon: Icon(Icons.close),
+                    ),
+                  ],
+                  hintStyle: WidgetStateProperty.all(
+                    TextStyle(color: Colors.white),
+                  ),
+                  textStyle: WidgetStateProperty.all(
+                    TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: WidgetStateProperty.all(Colors.black),
+                ),
+              )
+              : AppBar(
+                backgroundColor: Colors.black,
+                leading: Builder(
+                  builder:
+                      (context) => IconButton(
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                        icon: Icon(Icons.menu),
+                        color: Colors.blue,
+                      ),
+                ),
 
-        title: Text(
-          "Today",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        actions: [
-          Icon(Icons.search, color: Colors.white),
-          SizedBox(width: width * 0.03),
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(Icons.calendar_month, color: Colors.white),
-          ),
-        ],
-      ),
+                title: Text(
+                  "Today",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                actions:
+                    isSearching
+                        ? []
+                        : [
+                          GestureDetector(
+                            onTap:
+                                () => {
+                                  setState(() {
+                                    isSearching = !isSearching;
+                                  }),
+                                },
+                            child: Icon(Icons.search, color: Colors.white),
+                          ),
+                          SizedBox(width: width * 0.03),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Icon(
+                              Icons.calendar_month,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+              ),
 
       drawer: Drawer(
         backgroundColor: Colors.black,

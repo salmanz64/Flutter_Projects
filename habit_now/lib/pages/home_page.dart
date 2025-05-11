@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
 import 'package:habit_now/components/habit_tile.dart';
 import 'package:habit_now/database/habit_data.dart';
-import 'package:habit_now/models/daySummary.dart';
-import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/models/habitStatus.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +20,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // TODO: implement initState
+    print("app started");
     selectedDay = DateFormat('E').format(date);
+    Provider.of<HabitData>(context, listen: false).checkDelays();
 
     Provider.of<HabitData>(context, listen: false).doSomeDaySummary();
     super.initState();
@@ -74,16 +74,19 @@ class _HomePageState extends State<HomePage> {
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount:
-                      selectedIndex < value.overallDaySummary.length
-                          ? value.overallDaySummary[selectedIndex].habits.length
+                      selectedIndex < value.filteredDaySummary.length
+                          ? value
+                              .filteredDaySummary[selectedIndex]
+                              .habits
+                              .length
                           : 0,
                   itemBuilder: (context, index) {
                     HabitStatus element =
-                        value.overallDaySummary[selectedIndex].habits[index];
+                        value.filteredDaySummary[selectedIndex].habits[index];
 
                     return HabitTile(
                       hbs: element,
-                      date: value.overallDaySummary[selectedIndex].date,
+                      date: value.filteredDaySummary[selectedIndex].date,
                     );
                   },
                 );

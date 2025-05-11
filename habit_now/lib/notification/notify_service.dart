@@ -1,81 +1,93 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/timezone.dart' as tz;
 
-class NotifyService {
-  final notificationPlugin = FlutterLocalNotificationsPlugin();
+class ShowLocalNotification {
+  // Initialization
+  ShowLocalNotification() {
+    tz.initializeTimeZones(); // Initialize timezones when creating an instance
+    _initializeNotifications(); // Initialize notification plugin
+  }
 
-  bool _isInitialized = false;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  bool get isInitialized => _isInitialized;
-
-  Future<void> initNotification() async {
-    if (_isInitialized) return; // Prevent re-initialization
-
-    // Initialize timezone handling
-    tz.initializeTimeZones();
-    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(currentTimeZone));
-
-    // Prepare Android init settings
-    const AndroidInitializationSettings initSettingAndroid =
+  void _initializeNotifications() async {
+    const AndroidInitializationSettings androidInitSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // Prepare iOS init settings
-    const DarwinInitializationSettings initSettingsIOS =
-        DarwinInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
-        );
-
-    final initSettings = InitializationSettings(
-      android: initSettingAndroid,
-      iOS: initSettingsIOS,
+    const InitializationSettings initSettings = InitializationSettings(
+      android: androidInitSettings,
     );
 
-    // Initialize the plugin
-    await notificationPlugin.initialize(initSettings);
-
-    _isInitialized = true;
+    await flutterLocalNotificationsPlugin.initialize(initSettings);
   }
 
-  // Notifications Detail Setup
-  NotificationDetails notificationDetails() {
-    return const NotificationDetails(
-      android: AndroidNotificationDetails(
-        'daily_channel_id',
-        'Daily Notifications',
-        channelDescription: 'Daily Notification Channel',
-        importance: Importance.max,
-        priority: Priority.high,
-      ),
-      iOS: DarwinNotificationDetails(),
+  void shownotificaton(String title, String body) async {
+    print("hi");
+    var android = AndroidNotificationDetails(
+      'channel_id',
+      'channel_NAME',
+      priority: Priority.high,
+      importance: Importance.max,
+    );
+    var platform = NotificationDetails(android: android);
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platform,
+      payload: 'Welcome to the Local Notification demo ',
     );
   }
 
-  // Show Notification
-  Future<void> showNotification({
-    int id = 0,
-    String? title,
-    String? body,
-    String? payload,
-  }) async {
-    return notificationPlugin.show(id, title, body, notificationDetails());
-  }
+  // Future<void> scheduleNotification(String title, String body) async {
+  //   // Debug: Print current timezone
 
-  Future<void> scheduleNotification({
-    int id = 1,
-    required String title,
-    required String body,
-    required int hour,
-    required int minute,
-  }) async {
+  //   // Configure notification
+  //   const android = AndroidNotificationDetails(
+  //     'channel_id',
+  //     'channel_NAME',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //   );
+  //   final platform = NotificationDetails(android: android);
+
+  //   // Schedule in IST (current time + 5 seconds)
+  //   final scheduledTime = tz.TZDateTime.now(tz.local).add(Duration(seconds: 5));
+  //   print("Scheduled time (IST): $scheduledTime"); // Check for +05:30
+
+  //   await flutterLocalNotificationsPlugin.zonedSchedule(
+  //     0,
+  //     title,
+  //     body,
+  //     scheduledTime,
+  //     platform,
+  //     androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+  //     uiLocalNotificationDateInterpretation:
+  //         UILocalNotificationDateInterpretation.absoluteTime,
+  //   );
+  // }
+
+  void scheduleNotification(
+    String title,
+    String body,
+    int hour,
+    int minute,
+  ) async {
+    var android = AndroidNotificationDetails(
+      'channel_id',
+      'channel_NAME',
+      priority: Priority.high,
+      importance: Importance.max,
+    );
+    var platform = NotificationDetails(android: android);
+
     final now = tz.TZDateTime.now(tz.local);
 
-    // Create a date/time for today
-    var scheduledDate = tz.TZDateTime(
+    tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
+
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
@@ -84,26 +96,23 @@ class NotifyService {
       minute,
     );
 
-    // Schedule the notification
-    await notificationPlugin.zonedSchedule(
-      id,
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(Duration(days: 1));
+    }
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
       title,
       body,
       scheduledDate,
-      notificationDetails(),
-
-      // iOS Specific: Use exact time specified
+      platform,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-
-      // Android specific: Allow notification while device is in low power mode
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      // Make notification Daily
-      matchDateTimeComponents: DateTimeComponents.time,
+      matchDateTimeComponents:
+          DateTimeComponents
+              .time, // Ensures it repeats daily at the specified time
     );
-  }
-
-  Future<void> cancelAllNotifications() async {
-    await notificationPlugin.cancelAll();
+    print("Notification scheduled for $hour:$minute daily");
   }
 }

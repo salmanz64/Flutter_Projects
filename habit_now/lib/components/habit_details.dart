@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
+import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/utils/categories.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HabitDetails extends StatelessWidget {
   final void Function(Habit) onTap;
@@ -13,6 +15,17 @@ class HabitDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<int> statuses = Provider.of<HabitData>(
+      listen: false,
+      context,
+    ).findHabitStatuses(hb);
+    int streak = Provider.of<HabitData>(listen: false, context).findStreak(hb);
+
+    int completion = Provider.of<HabitData>(
+      listen: false,
+      context,
+    ).findCompletion(hb);
+    print(completion.isFinite);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Padding(
@@ -108,6 +121,7 @@ class HabitDetails extends StatelessWidget {
                     String dayOfMonth = DateFormat('d').format(days);
 
                     return DateTile(
+                      status: statuses[index],
                       dayOfMonth: dayOfMonth,
                       dayOfWeek: dayOfWeek,
                       isActive: false,
@@ -117,6 +131,7 @@ class HabitDetails extends StatelessWidget {
                   },
                 ),
               ),
+
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(color: Colors.grey, thickness: 0.4),
@@ -134,7 +149,10 @@ class HabitDetails extends StatelessWidget {
                             )['color'],
                       ),
                       SizedBox(width: width * 0.01),
-                      Text("1", style: TextStyle(color: Colors.white)),
+                      Text(
+                        streak.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
                       SizedBox(width: width * 0.03),
                       Icon(
                         Icons.check_circle_outline,
@@ -144,7 +162,10 @@ class HabitDetails extends StatelessWidget {
                             )['color'],
                       ),
                       SizedBox(width: width * 0.01),
-                      Text("100%", style: TextStyle(color: Colors.white)),
+                      Text(
+                        "$completion%",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                   Row(
