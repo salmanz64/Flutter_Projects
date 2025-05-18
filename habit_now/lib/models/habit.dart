@@ -9,8 +9,10 @@ class Habit {
   int priority;
   final List dates;
   TimeOfDay? time;
+  int bestStreak;
 
   Habit({
+    this.bestStreak = 0,
     required this.category,
     required this.title,
     required this.description,

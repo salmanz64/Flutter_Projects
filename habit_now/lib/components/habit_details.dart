@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/components/date_tile.dart';
 import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/models/habit.dart';
+import 'package:habit_now/pages/Statistics/statistics_page.dart';
 import 'package:habit_now/utils/categories.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class HabitDetails extends StatelessWidget {
       listen: false,
       context,
     ).findCompletion(hb);
-    print(completion.isFinite);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Padding(
@@ -170,7 +171,38 @@ class HabitDetails extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.stacked_bar_chart, color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => StatisticsPage(
+                                    hb: hb,
+                                    color:
+                                        categories.firstWhere(
+                                          (element) =>
+                                              element['name'] == hb.category,
+                                        )['color'],
+                                    icon: Icon(
+                                      categories.firstWhere(
+                                        (element) =>
+                                            element['name'] == hb.category,
+                                      )['icon'],
+                                      color:
+                                          categories.firstWhere(
+                                            (element) =>
+                                                element['name'] == hb.category,
+                                          )['color'],
+                                    ),
+                                  ),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          Icons.stacked_bar_chart,
+                          color: Colors.white,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           onTap(hb);

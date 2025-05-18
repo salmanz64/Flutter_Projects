@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  calendar_date_picker2:
+    dependency: "direct main"
+    description:
+      name: calendar_date_picker2
+      sha256: "293020a283210ccefff669499178c127acbb5e77ae13864f992c8a3e68a8aca1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   characters:
     dependency: transitive
     description:
@@ -73,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -89,11 +105,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "577aeac8ca414c25333334d7c4bb246775234c0e44b38b10a82b559dd4d764e7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_heatmap_calendar:
+    dependency: "direct main"
+    description:
+      name: flutter_heatmap_calendar
+      sha256: "0933071844cd604b938e38358984244292ba1ba8f4b4b6f0f091f5927a23e958"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -264,6 +296,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  percent_indicator:
+    dependency: "direct main"
+    description:
+      name: percent_indicator
+      sha256: "157d29133bbc6ecb11f923d36e7960a96a3f28837549a20b65e5135729f0f9fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.5"
   permission_handler:
     dependency: "direct main"
     description:
@@ -471,4 +511,4 @@ packages:
     version: "6.5.0"
 sdks:
   dart: ">=3.7.0 <4.0.0"
-  flutter: ">=3.24.0"
+  flutter: ">=3.27.4"

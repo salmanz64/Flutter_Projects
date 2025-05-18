@@ -165,14 +165,6 @@ class _PageNavigatorState extends State<PageNavigator> {
                                 },
                             child: Icon(Icons.search, color: Colors.white),
                           ),
-                          SizedBox(width: width * 0.03),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Icon(
-                              Icons.calendar_month,
-                              color: Colors.white,
-                            ),
-                          ),
                         ],
               ),
 

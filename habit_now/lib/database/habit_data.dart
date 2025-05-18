@@ -215,6 +215,9 @@ class HabitData extends ChangeNotifier {
         streak = 0;
       }
     }
+    if (streak > hb.bestStreak) {
+      hb.bestStreak = streak;
+    }
     return streak;
   }
 
@@ -245,5 +248,135 @@ class HabitData extends ChangeNotifier {
     } else {
       return ((completed / totalNumber) * 100).toInt();
     }
+  }
+
+  Map<DateTime, int> heatMap(Habit hb) {
+    Map<DateTime, int> dates = {};
+    Habit targetHabit = overallHabits.firstWhere(
+      (habit) => habit.title == hb.title,
+    );
+
+    for (int i = 0; i < overallDaySummary.length; i++) {
+      for (int j = 0; j < overallDaySummary[i].habits.length; j++) {
+        if (overallDaySummary[i].habits[j].hb.title == targetHabit.title) {
+          String dateString = overallDaySummary[i].date;
+          int year = int.parse(dateString.substring(0, 4));
+          int month = int.parse(dateString.substring(4, 6));
+          int day = int.parse(dateString.substring(6, 8));
+
+          DateTime date = DateTime(year, month, day);
+          dates[date] = overallDaySummary[i].habits[j].isDone;
+        }
+      }
+    }
+
+    return dates;
+  }
+
+  //TO find the times completed
+  Map findTimesCompleted(Habit hb) {
+    Map timesCompleted = {'week': 0, 'month': 0, 'year': 0, 'all': 0};
+
+    DateTime today = DateTime.now();
+    DateTime thisWeek = DateTime(
+      today.year,
+      today.month,
+      today.day,
+    ).subtract(Duration(days: today.weekday - 1));
+    for (int i = 0; i < overallDaySummary.length; i++) {
+      HabitStatus? isFound;
+      try {
+        isFound = overallDaySummary[i].habits.firstWhere(
+          (element) => element.hb.title == hb.title,
+        );
+      } catch (e) {
+        isFound = null;
+      }
+      if (isFound != null && isFound.isDone == 1) {
+        DateTime date = convertStringToDate(overallDaySummary[i].date);
+        DateTime startOfTheWeek = DateTime(
+          date.year,
+          date.month,
+          date.day,
+        ).subtract(Duration(days: date.weekday - 1));
+
+        if (thisWeek.isAtSameMomentAs(startOfTheWeek)) {
+          timesCompleted['week'] += 1;
+        }
+        if (date.month == today.month) {
+          timesCompleted['month'] += 1;
+        }
+        if (date.year == today.year) {
+          timesCompleted['year'] += 1;
+        }
+        timesCompleted['all'] += 1;
+      }
+    }
+    return timesCompleted;
+  }
+
+  Map barGraph(Habit hb) {
+    Map data = {
+      'Jan': 0,
+      'Feb': 0,
+
+      'Mar': 0,
+      'Apr': 0,
+      'May': 0,
+      'Jun': 0,
+      'Jul': 0,
+      'Aug': 0,
+      'Sep': 0,
+      'Oct': 0,
+      'Nov': 0,
+      'Dec': 0,
+    };
+
+    for (int i = 0; i < overallDaySummary.length; i++) {
+      HabitStatus? isFound;
+      try {
+        isFound = overallDaySummary[i].habits.firstWhere(
+          (element) => element.hb.title == hb.title,
+        );
+      } catch (e) {
+        isFound = null;
+      }
+      if (isFound != null && isFound.isDone == 1) {
+        DateTime date = convertStringToDate(overallDaySummary[i].date);
+
+        String monthAbbv = DateFormat('MMM').format(date);
+        data[monthAbbv] += 1;
+      }
+    }
+
+    return data;
+  }
+
+  Map pieChartData(Habit hb) {
+    Map data = {'green': 0, 'red': 0, 'yellow': 0, 'total': 0};
+    for (int i = 0; i < overallDaySummary.length; i++) {
+      HabitStatus? isFound;
+      try {
+        isFound = overallDaySummary[i].habits.firstWhere(
+          (element) => element.hb.title == hb.title,
+        );
+      } catch (e) {
+        isFound = null;
+      }
+      if (isFound != null && isFound.isDone == 1) {
+        data['green'] += 1;
+      } else if (isFound != null && isFound.isDone == 2) {
+        data['red'] += 1;
+      } else if (isFound != null && isFound.isDone == 3) {
+        data['yellow'] += 1;
+      }
+    }
+    int total = data.values.reduce((value, element) => value + element);
+    data['total'] = total;
+    if (total == 0) {
+      return {'green': 0, 'red': 0, 'yellow': 0, 'total': 0};
+    }
+
+    return data;
   }
 }

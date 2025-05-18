@@ -17,3 +17,10 @@ String converDateTOString(DateTime dateTime) {
 
   return yyyymmdd;
 }
+
+DateTime convertStringToDate(String date) {
+  int year = int.parse(date.substring(0, 4));
+  int month = int.parse(date.substring(4, 6));
+  int day = int.parse(date.substring(6, 8));
+  return DateTime(year, month, day);
+}

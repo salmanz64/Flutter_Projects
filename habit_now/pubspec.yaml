@@ -41,6 +41,10 @@ dependencies:
   timezone: ^0.10.0
   hive: ^2.2.3
   permission_handler: ^12.0.0+1
+  calendar_date_picker2: ^2.0.0
+  flutter_heatmap_calendar: ^1.0.5
+  percent_indicator: ^4.2.5
+  fl_chart: ^1.0.0
 
 dev_dependencies:
   flutter_test:
