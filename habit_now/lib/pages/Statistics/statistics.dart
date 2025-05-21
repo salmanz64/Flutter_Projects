@@ -21,7 +21,7 @@ class Statistics extends StatelessWidget {
     int streak = Provider.of<HabitData>(context, listen: false).findStreak(hb!);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -43,7 +43,7 @@ class Statistics extends StatelessWidget {
               animation: true,
               animateFromLastPercent: true,
               animationDuration: 1500,
-              backgroundColor: const Color.fromARGB(255, 52, 52, 52),
+              backgroundColor: Theme.of(context).colorScheme.tertiary,
 
               radius: 70,
               percent: percentage / 100,

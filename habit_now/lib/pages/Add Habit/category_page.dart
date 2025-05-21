@@ -8,13 +8,13 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(
           "Select a Category for your habit",
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: GridView.builder(
         padding: EdgeInsets.all(5),
@@ -42,11 +42,13 @@ class CategoryPage extends StatelessWidget {
                 children: [
                   Text(
                     categories[index]['name'],
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white10,
+                      color: Colors.white12,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: EdgeInsets.all(10),

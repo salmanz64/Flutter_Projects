@@ -24,10 +24,13 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("Define Your Habit", style: TextStyle(color: Colors.blue)),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        title: Text(
+          "Define Your Habit",
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -53,7 +56,10 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
 
             Text(
               "How Often Do you want to do it ?",
-              style: TextStyle(color: Colors.blue, fontSize: 20),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+                fontSize: 20,
+              ),
             ),
             Row(
               children: [
@@ -67,7 +73,12 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                     });
                   },
                 ),
-                Text("Every Day", style: TextStyle(color: Colors.white)),
+                Text(
+                  "Every Day",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
               ],
             ),
 
@@ -85,7 +96,9 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                 ),
                 Text(
                   "Some Days of the week",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ],
             ),
@@ -111,7 +124,9 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                           ),
                           Text(
                             days[index],
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ],
                       );
@@ -128,11 +143,16 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.notifications_active, color: Colors.blue),
+                      Icon(
+                        Icons.notifications_active,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                       SizedBox(width: 10),
                       Text(
                         "Time and reminders",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),
@@ -144,7 +164,12 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                         initialTime: TimeOfDay.now(),
                       );
                     },
-                    child: Text("0", style: TextStyle(color: Colors.blue)),
+                    child: Text(
+                      "0",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -159,13 +184,26 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.flag, color: Colors.blue),
+                      Icon(
+                        Icons.flag,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                       SizedBox(width: 10),
-                      Text("Priority", style: TextStyle(color: Colors.white)),
+                      Text(
+                        "Priority",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
                     ],
                   ),
 
-                  Text("0", style: TextStyle(color: Colors.blue)),
+                  Text(
+                    "0",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -198,7 +236,7 @@ class _HabitDetailPageState extends State<HabitDetailPage> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(

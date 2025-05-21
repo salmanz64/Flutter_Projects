@@ -39,7 +39,7 @@ class _HabitTileState extends State<HabitTile> {
       child: ListTile(
         leading: Container(
           decoration: BoxDecoration(
-            color: Colors.white10,
+            color: Theme.of(context).colorScheme.tertiary,
             borderRadius: BorderRadius.circular(10),
           ),
           padding: EdgeInsets.all(10),
@@ -54,7 +54,10 @@ class _HabitTileState extends State<HabitTile> {
                 )['color'],
           ),
         ),
-        title: Text(widget.hbs.hb.title, style: TextStyle(color: Colors.white)),
+        title: Text(
+          widget.hbs.hb.title,
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+        ),
         subtitle: Row(
           children: [
             Text(
@@ -91,7 +94,7 @@ class _HabitTileState extends State<HabitTile> {
             height: height * 0.09,
             child: isDone_Icon[widget.hbs.isDone],
             decoration: BoxDecoration(
-              color: Colors.white10,
+              color: Colors.white12,
               shape: BoxShape.circle,
             ),
           ),

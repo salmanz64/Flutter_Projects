@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/pages/Add%20Habit/habit_detail_page.dart';
 import 'package:habit_now/utils/categories.dart';
+import 'package:provider/provider.dart';
 
 class EditPage extends StatefulWidget {
   Habit? hb;
-  EditPage({super.key, required this.hb});
+  final void Function(Habit) onTap;
+  EditPage({super.key, required this.hb, required this.onTap});
 
   @override
   State<EditPage> createState() => _EditPageState();
@@ -26,8 +29,11 @@ class _EditPageState extends State<EditPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text("Check Spending", style: TextStyle(color: Colors.white)),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: Text(
+            widget.hb!.title,
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -35,7 +41,7 @@ class _EditPageState extends State<EditPage> {
             ),
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -56,7 +62,11 @@ class _EditPageState extends State<EditPage> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              widget.hb!.title = ed.text;
+                              Provider.of<HabitData>(
+                                context,
+                                listen: false,
+                              ).editHabitName(widget.hb!, ed.text);
+                              widget.onTap(widget.hb!);
                               Navigator.of(context).pop();
                             },
                             child: Text("Save"),
@@ -84,7 +94,8 @@ class _EditPageState extends State<EditPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            backgroundColor: Colors.black,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
                             title: Text("Select A category"),
                             content: SizedBox(
                               width: 200,
@@ -101,11 +112,16 @@ class _EditPageState extends State<EditPage> {
                                     onTap:
                                         () => {
                                           setState(() {
-                                            widget.hb!.category =
-                                                categories[index]['name'];
+                                            Provider.of<HabitData>(
+                                              context,
+                                              listen: false,
+                                            ).editHabitCategory(
+                                              widget.hb!,
+                                              categories[index]['name'],
+                                            );
+                                            widget.onTap(widget.hb!);
+                                            Navigator.of(context).pop();
                                           }),
-
-                                          Navigator.of(context).pop(),
                                         },
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -113,7 +129,10 @@ class _EditPageState extends State<EditPage> {
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.white10,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.tertiary,
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                             ),
@@ -127,7 +146,10 @@ class _EditPageState extends State<EditPage> {
                                           Text(
                                             categories[index]['name'],
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
                                               fontSize: 10,
                                             ),
                                           ),

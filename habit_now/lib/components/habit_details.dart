@@ -38,8 +38,8 @@ class HabitDetails extends StatelessWidget {
           border: Border.all(color: Colors.grey, width: 0.2),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withAlpha(25),
-              blurRadius: 10,
+              color: Theme.of(context).colorScheme.surface,
+              blurRadius: 3,
               offset: Offset(0, 4), // horizontal, vertical
             ),
           ],
@@ -74,7 +74,7 @@ class HabitDetails extends StatelessWidget {
                           Text(
                             hb.title,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
                             ),
@@ -94,7 +94,7 @@ class HabitDetails extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white10,
+                      color: Theme.of(context).colorScheme.tertiary,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: EdgeInsets.all(10),
@@ -122,6 +122,7 @@ class HabitDetails extends StatelessWidget {
                     String dayOfMonth = DateFormat('d').format(days);
 
                     return DateTile(
+                      color: Theme.of(context).colorScheme.surface,
                       status: statuses[index],
                       dayOfMonth: dayOfMonth,
                       dayOfWeek: dayOfWeek,
@@ -152,7 +153,9 @@ class HabitDetails extends StatelessWidget {
                       SizedBox(width: width * 0.01),
                       Text(
                         streak.toString(),
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                       SizedBox(width: width * 0.03),
                       Icon(
@@ -165,7 +168,9 @@ class HabitDetails extends StatelessWidget {
                       SizedBox(width: width * 0.01),
                       Text(
                         "$completion%",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),
@@ -200,14 +205,17 @@ class HabitDetails extends StatelessWidget {
                         },
                         child: Icon(
                           Icons.stacked_bar_chart,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           onTap(hb);
                         },
-                        child: Icon(Icons.more_vert, color: Colors.white),
+                        child: Icon(
+                          Icons.more_vert,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),

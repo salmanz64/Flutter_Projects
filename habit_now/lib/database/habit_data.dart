@@ -37,6 +37,16 @@ class HabitData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void editHabitName(Habit hb, String text) {
+    hb.title = text;
+    notifyListeners();
+  }
+
+  void editHabitCategory(Habit hb, String text) {
+    hb.category = text;
+    notifyListeners();
+  }
+
   // to check whether the date is the one in the habit
   bool isHabitOnDay(Habit hb, String dayOfWeek) {
     int val = days.indexOf(dayOfWeek);

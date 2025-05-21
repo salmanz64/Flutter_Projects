@@ -5,6 +5,7 @@ import 'package:habit_now/pages/Add%20Habit/category_page.dart';
 import 'package:habit_now/pages/Edit%20Habit/edit_page.dart';
 import 'package:habit_now/pages/habit_page.dart';
 import 'package:habit_now/pages/home_page.dart';
+import 'package:habit_now/pages/settings/settingspage.dart';
 import 'package:habit_now/pages/timer_page.dart';
 import 'package:habit_now/styles/text_styles.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,7 @@ class _PageNavigatorState extends State<PageNavigator> {
       bottomSheet:
           showOption
               ? Container(
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.surface,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -60,13 +61,20 @@ class _PageNavigatorState extends State<PageNavigator> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => EditPage(hb: widget.hb),
+                              builder:
+                                  (context) => EditPage(
+                                    hb: widget.hb,
+                                    onTap: displayOption,
+                                  ),
                             ),
                           );
                         },
                         child: Row(
                           children: [
-                            Icon(Icons.edit, color: Colors.blue),
+                            Icon(
+                              Icons.edit,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                             SizedBox(width: 20),
                             Text("Edit"),
                           ],
@@ -86,7 +94,10 @@ class _PageNavigatorState extends State<PageNavigator> {
                         },
                         child: Row(
                           children: [
-                            Icon(Icons.delete, color: Colors.blue),
+                            Icon(
+                              Icons.delete,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                             SizedBox(width: 20),
                             Text("Delete"),
                           ],
@@ -97,15 +108,18 @@ class _PageNavigatorState extends State<PageNavigator> {
                 ),
               )
               : SizedBox(),
-      backgroundColor: Colors.black,
+
       appBar:
           isSearching
               ? AppBar(
                 automaticallyImplyLeading: false, // Remove leading icon (menu)
-                backgroundColor: Colors.black,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 // Remove the default spacing around the title
                 title: SearchBar(
-                  leading: Icon(Icons.search, color: Colors.white),
+                  leading: Icon(
+                    Icons.search,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   onChanged: (value) {
                     Provider.of<HabitData>(
                       context,
@@ -114,7 +128,7 @@ class _PageNavigatorState extends State<PageNavigator> {
                   },
                   trailing: [
                     IconButton(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary,
                       onPressed: () {
                         setState(() {
                           isSearching = !isSearching;
@@ -124,16 +138,18 @@ class _PageNavigatorState extends State<PageNavigator> {
                     ),
                   ],
                   hintStyle: WidgetStateProperty.all(
-                    TextStyle(color: Colors.white),
+                    TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
                   textStyle: WidgetStateProperty.all(
-                    TextStyle(color: Colors.white),
+                    TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
-                  backgroundColor: WidgetStateProperty.all(Colors.black),
+                  backgroundColor: WidgetStateProperty.all(
+                    Theme.of(context).colorScheme.surface,
+                  ),
                 ),
               )
               : AppBar(
-                backgroundColor: Colors.black,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 leading: Builder(
                   builder:
                       (context) => IconButton(
@@ -141,7 +157,7 @@ class _PageNavigatorState extends State<PageNavigator> {
                           Scaffold.of(context).openDrawer();
                         },
                         icon: Icon(Icons.menu),
-                        color: Colors.blue,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
 
@@ -149,7 +165,7 @@ class _PageNavigatorState extends State<PageNavigator> {
                   "Today",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 actions:
@@ -163,13 +179,16 @@ class _PageNavigatorState extends State<PageNavigator> {
                                     isSearching = !isSearching;
                                   }),
                                 },
-                            child: Icon(Icons.search, color: Colors.white),
+                            child: Icon(
+                              Icons.search,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ],
               ),
 
       drawer: Drawer(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.surface,
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +213,7 @@ class _PageNavigatorState extends State<PageNavigator> {
                       Text(
                         "Now",
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Theme.of(context).colorScheme.secondary,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
@@ -203,7 +222,10 @@ class _PageNavigatorState extends State<PageNavigator> {
                   ),
                   Text(
                     "Tuesday",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 18,
+                    ),
                   ),
                   Text("March 18, 2025", style: TextStyle(color: Colors.grey)),
                 ],
@@ -224,17 +246,88 @@ class _PageNavigatorState extends State<PageNavigator> {
             SizedBox(height: height * 0.02),
             Column(
               children: [
-                ListTile(
-                  leading: Icon(Icons.home, color: Colors.white),
-                  title: Text("Home", style: whiteText),
+                GestureDetector(
+                  onTap:
+                      () => {
+                        setState(() {
+                          _selectIndex = 0;
+                        }),
+                        Navigator.of(context).pop(),
+                      },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.home,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    title: Text(
+                      "Home",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.timer, color: Colors.white),
-                  title: Text("Timer", style: whiteText),
+                GestureDetector(
+                  onTap:
+                      () => {
+                        setState(() {
+                          _selectIndex = 2;
+                        }),
+                        Navigator.of(context).pop(),
+                      },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.timer,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    title: Text(
+                      "Timer",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.category, color: Colors.white),
-                  title: Text("Categories", style: whiteText),
+                GestureDetector(
+                  onTap:
+                      () => {
+                        setState(() {
+                          _selectIndex = 1;
+                        }),
+                        Navigator.of(context).pop(),
+                      },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.category,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    title: Text(
+                      "Habits ",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Settingspage()),
+                    );
+                  },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.settings,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    title: Text(
+                      "Settings",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -250,8 +343,8 @@ class _PageNavigatorState extends State<PageNavigator> {
           });
         },
         selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.white,
-        backgroundColor: Colors.black,
+        unselectedItemColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.surface,
 
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.today), label: "Today"),

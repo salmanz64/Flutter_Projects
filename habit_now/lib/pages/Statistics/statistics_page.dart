@@ -21,14 +21,20 @@ class StatisticsPage extends StatelessWidget {
 
       animationDuration: Duration(seconds: 1),
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text(hb!.title, style: TextStyle(color: Colors.white)),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: Text(
+            hb!.title,
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
           actions: [Padding(padding: const EdgeInsets.all(8.0), child: icon)],
           //to place the tab bar just beneath the app bar we use bottom
           bottom: TabBar(
-            labelColor: Colors.white,
+            labelColor: Theme.of(context).colorScheme.secondary,
+
+            indicatorColor: Theme.of(context).colorScheme.secondary,
+
             tabs: [
               Tab(child: Text("Calendar")),
               Tab(child: Text("Statistics")),

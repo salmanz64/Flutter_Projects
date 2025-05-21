@@ -35,15 +35,15 @@ class _CalendarPageState extends State<CalendarPage> {
       children: [
         //disallows all user interactions
         HeatMapCalendar(
-          defaultColor: Colors.black,
+          defaultColor: Theme.of(context).colorScheme.surface,
 
           colorsets: {
-            0: Colors.black,
+            0: Theme.of(context).colorScheme.surface,
             1: const Color.fromARGB(255, 57, 249, 64),
             2: const Color.fromARGB(255, 253, 40, 25),
             3: Colors.yellow,
           },
-          textColor: Colors.white,
+          textColor: Theme.of(context).colorScheme.primary,
           datasets: widget.dates,
           showColorTip: false,
 
@@ -53,19 +53,29 @@ class _CalendarPageState extends State<CalendarPage> {
 
         Column(
           children: [
-            Row(
-              children: [
-                Icon(Icons.line_axis, color: Colors.blue, size: 30),
-                Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.line_axis,
+                    color: Theme.of(context).colorScheme.secondary,
+                    size: 30,
+                  ),
+                  Spacer(),
 
-                Text("Streak", style: TextStyle(fontSize: 22)),
-                Spacer(),
-              ],
+                  Text("Streak", style: TextStyle(fontSize: 22)),
+                  Spacer(),
+                ],
+              ),
             ),
             SizedBox(height: 10),
             Text(
               "$streak  Days",
-              style: TextStyle(fontSize: 25, color: Colors.blue),
+              style: TextStyle(
+                fontSize: 25,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
             ),
           ],
         ),

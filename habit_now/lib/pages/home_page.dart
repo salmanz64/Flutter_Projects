@@ -19,8 +19,6 @@ class _HomePageState extends State<HomePage> {
   late String selectedDay;
   @override
   void initState() {
-    // TODO: implement initState
-    print("app started");
     selectedDay = DateFormat('E').format(date);
     Provider.of<HabitData>(context, listen: false).checkDelays();
 
@@ -54,6 +52,7 @@ class _HomePageState extends State<HomePage> {
                     });
                   },
                   child: DateTile(
+                    color: Theme.of(context).colorScheme.tertiary,
                     dayOfMonth: dayOfMonth,
                     dayOfWeek: dayOfWeek,
                     isActive: index == selectedIndex,
