@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/themes/theme.dart';
 import 'package:habit_now/themes/themeProvider.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:habit_now/pages/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   tz_data.initializeTimeZones();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('habit_database');
 
   runApp(MyApp());
 

@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 class HiveDatabase {
   final box = Hive.box('habit_database');
 
-  //[ [ title,description,category,dates,time ] ]
+  //[ [ title,description,category,dates,time,bestStreak,notfid,priority ] ]
   void addHabittoHive(List<Habit> allHabits) {
     List<dynamic> formattedallHabitsList = [];
     for (var habit in allHabits) {
@@ -16,9 +16,13 @@ class HiveDatabase {
         habit.category,
         habit.dates,
         habit.time,
+        habit.bestStreak,
+        habit.notfid,
+        habit.priority,
       ];
       formattedallHabitsList.add(singleList);
     }
+
     box.put("AllHabitList", formattedallHabitsList);
   }
 
@@ -34,6 +38,9 @@ class HiveDatabase {
           daySummary.habits[i].hb.category,
           daySummary.habits[i].hb.dates,
           daySummary.habits[i].hb.time,
+          daySummary.habits[i].hb.bestStreak,
+          daySummary.habits[i].hb.notfid,
+          daySummary.habits[i].hb.priority,
         ];
 
         dayHabits.add([daySummary.habits[i].isDone, singleList]);
@@ -79,7 +86,7 @@ class HiveDatabase {
           time: habits[j][4],
         );
 
-        singleList.add(HabitStatus(hb: hb, isDone:habits[j][0]));
+        singleList.add(HabitStatus(hb: hb, isDone: habits[j][0]));
       }
       originalList.add(
         Daysummary(habits: singleList, date: convertedList[i][0]),

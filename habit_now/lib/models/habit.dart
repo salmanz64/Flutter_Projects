@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class Habit {
   String category;
   String title;
+  int? notfid;
   String description;
   int priority;
   final List dates;
@@ -13,6 +14,7 @@ class Habit {
 
   Habit({
     this.bestStreak = 0,
+    this.notfid,
     required this.category,
     required this.title,
     required this.description,

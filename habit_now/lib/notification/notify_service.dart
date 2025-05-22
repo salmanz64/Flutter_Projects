@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:permission_handler/permission_handler.dart';
 
 class ShowLocalNotification {
   // Initialization
@@ -21,10 +22,15 @@ class ShowLocalNotification {
     );
 
     await flutterLocalNotificationsPlugin.initialize(initSettings);
+
+    // ✅ Request notification permission on Android 13+
+    if (await Permission.notification.isDenied) {
+      final result = await Permission.notification.request();
+      print("Notification permission: $result");
+    }
   }
 
   void shownotificaton(String title, String body) async {
-    print("hi");
     var android = AndroidNotificationDetails(
       'channel_id',
       'channel_NAME',
@@ -41,35 +47,8 @@ class ShowLocalNotification {
     );
   }
 
-  // Future<void> scheduleNotification(String title, String body) async {
-  //   // Debug: Print current timezone
-
-  //   // Configure notification
-  //   const android = AndroidNotificationDetails(
-  //     'channel_id',
-  //     'channel_NAME',
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //   );
-  //   final platform = NotificationDetails(android: android);
-
-  //   // Schedule in IST (current time + 5 seconds)
-  //   final scheduledTime = tz.TZDateTime.now(tz.local).add(Duration(seconds: 5));
-  //   print("Scheduled time (IST): $scheduledTime"); // Check for +05:30
-
-  //   await flutterLocalNotificationsPlugin.zonedSchedule(
-  //     0,
-  //     title,
-  //     body,
-  //     scheduledTime,
-  //     platform,
-  //     androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-  //     uiLocalNotificationDateInterpretation:
-  //         UILocalNotificationDateInterpretation.absoluteTime,
-  //   );
-  // }
-
   void scheduleNotification(
+    int id,
     String title,
     String body,
     int hour,
@@ -101,7 +80,7 @@ class ShowLocalNotification {
     }
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
+      id,
       title,
       body,
       scheduledDate,
@@ -114,5 +93,9 @@ class ShowLocalNotification {
               .time, // Ensures it repeats daily at the specified time
     );
     print("Notification scheduled for $hour:$minute daily");
+  }
+
+  Future<void> removeTheHabitsNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

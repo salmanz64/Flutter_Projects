@@ -1,11 +1,13 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:habit_now/database/hive_database.dart';
 import 'package:habit_now/models/daySummary.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/models/habitStatus.dart';
 import 'package:habit_now/notification/notify_service.dart';
 import 'package:habit_now/utils/dates.dart';
+
 import 'package:intl/intl.dart';
 
 class HabitData extends ChangeNotifier {
@@ -14,11 +16,16 @@ class HabitData extends ChangeNotifier {
   List<Daysummary> filteredDaySummary = [];
   List<Daysummary> fifteenDaySummary = [];
 
+  HiveDatabase db = HiveDatabase();
+
   void addHabit(Habit hb) {
     overallHabits.add(hb);
 
     if (hb.time != null) {
+      int uniqueId = DateTime.now().millisecondsSinceEpoch.remainder(100000);
+      hb.notfid = uniqueId;
       ShowLocalNotification().scheduleNotification(
+        uniqueId,
         hb.title,
         "It's Time for ${hb.title} Buckle Up",
         hb.time!.hour,
@@ -27,13 +34,21 @@ class HabitData extends ChangeNotifier {
     }
 
     doSomeDaySummary();
+    db.addHabittoHive(overallHabits);
 
     notifyListeners();
   }
 
   void deleteHabit(String name) {
+    Habit hb = overallHabits.firstWhere((element) => element.title == name);
+
     overallHabits.removeWhere((element) => element.title == name);
     doSomeDaySummary();
+    if (hb.notfid != null) {
+      print(hb.notfid!);
+      ShowLocalNotification().removeTheHabitsNotification(hb.notfid!);
+    }
+
     notifyListeners();
   }
 

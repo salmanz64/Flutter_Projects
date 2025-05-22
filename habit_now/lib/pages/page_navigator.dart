@@ -3,11 +3,11 @@ import 'package:habit_now/database/habit_data.dart';
 import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/pages/Add%20Habit/category_page.dart';
 import 'package:habit_now/pages/Edit%20Habit/edit_page.dart';
+import 'package:habit_now/pages/Timer%20Page/timer_page.dart';
 import 'package:habit_now/pages/habit_page.dart';
 import 'package:habit_now/pages/home_page.dart';
 import 'package:habit_now/pages/settings/settingspage.dart';
-import 'package:habit_now/pages/timer_page.dart';
-import 'package:habit_now/styles/text_styles.dart';
+
 import 'package:provider/provider.dart';
 
 class PageNavigator extends StatefulWidget {
@@ -169,22 +169,24 @@ class _PageNavigatorState extends State<PageNavigator> {
                   ),
                 ),
                 actions:
-                    isSearching
-                        ? []
-                        : [
-                          GestureDetector(
-                            onTap:
-                                () => {
-                                  setState(() {
-                                    isSearching = !isSearching;
-                                  }),
-                                },
-                            child: Icon(
-                              Icons.search,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ],
+                    _selectIndex == 0
+                        ? isSearching
+                            ? []
+                            : [
+                              GestureDetector(
+                                onTap:
+                                    () => {
+                                      setState(() {
+                                        isSearching = !isSearching;
+                                      }),
+                                    },
+                                child: Icon(
+                                  Icons.search,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ]
+                        : [],
               ),
 
       drawer: Drawer(
@@ -355,15 +357,18 @@ class _PageNavigatorState extends State<PageNavigator> {
           BottomNavigationBarItem(icon: Icon(Icons.timer), label: "Timer"),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (context) => CategoryPage()));
-        },
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.add, color: Colors.white, size: 30),
-      ),
+      floatingActionButton:
+          _selectIndex != 2
+              ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => CategoryPage()),
+                  );
+                },
+                backgroundColor: Colors.blue,
+                child: Icon(Icons.add, color: Colors.white, size: 30),
+              )
+              : null,
     );
   }
 }

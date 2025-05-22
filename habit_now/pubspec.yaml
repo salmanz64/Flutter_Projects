@@ -45,6 +45,9 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   percent_indicator: ^4.2.5
   fl_chart: ^1.0.0
+  stop_watch_timer: ^3.2.2
+  toggle_switch: ^2.3.0
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
