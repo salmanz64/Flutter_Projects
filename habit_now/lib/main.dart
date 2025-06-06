@@ -10,11 +10,8 @@ import 'package:provider/provider.dart';
 
 void main() async {
   tz_data.initializeTimeZones();
-  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox('habit_database');
-
-  runApp(MyApp());
 
   runApp(
     MultiProvider(

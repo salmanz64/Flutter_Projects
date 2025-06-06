@@ -1,4 +1,3 @@
-import 'package:habit_now/models/habit.dart';
 import 'package:habit_now/models/habitStatus.dart';
 
 class Daysummary {

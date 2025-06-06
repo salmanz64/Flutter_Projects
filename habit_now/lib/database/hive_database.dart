@@ -28,7 +28,7 @@ class HiveDatabase {
 
   void addDaySummaryToHive(List<Daysummary> overallDaySummary) {
     List<dynamic> formattedallDaySummaryList = [];
-    //[ [2024,[ isDone,[habit,habit,ashf,...] ] ]
+    //[ [2024,[ [isDone,[habit,habit,ashf,...] ] ]
     for (var daySummary in overallDaySummary) {
       List<dynamic> dayHabits = [];
       for (int i = 0; i < daySummary.habits.length; i++) {
@@ -48,10 +48,11 @@ class HiveDatabase {
       List<dynamic> singleList = [daySummary.date, dayHabits];
       formattedallDaySummaryList.add(singleList);
     }
+
     box.put("AllDaySummary", formattedallDaySummaryList);
   }
 
-  List getHabits() {
+  List<Habit> getHabits() {
     List convertedList = box.get("AllHabitList") ?? [];
 
     List<Habit> originalList = [];
@@ -63,34 +64,45 @@ class HiveDatabase {
         description: convertedList[i][1],
         dates: convertedList[i][3],
         time: convertedList[i][4],
+        bestStreak: convertedList[i][5],
+        notfid: convertedList[i][6],
+        priority: convertedList[i][7],
       );
       originalList.add(hb);
     }
     return originalList;
   }
 
-  List getDaySummary() {
+  List<Daysummary> getDaySummary() {
     List convertedList = box.get("AllDaySummary") ?? [];
 
     List<Daysummary> originalList = [];
 
     for (int i = 0; i < convertedList.length; i++) {
-      List habits = convertedList[i][1];
+      String date = convertedList[i][0];
+      List habitsStatus = convertedList[i][1];
       List<HabitStatus> singleList = [];
-      for (int j = 0; j < habits.length; j++) {
-        Habit hb = Habit(
-          category: habits[j][2],
-          title: habits[j][0],
-          description: habits[j][1],
-          dates: habits[j][3],
-          time: habits[j][4],
-        );
+      for (int j = 0; j < habitsStatus.length; j++) {
+        int habitStatus = habitsStatus[j][0];
 
-        singleList.add(HabitStatus(hb: hb, isDone: habits[j][0]));
+        singleList.add(
+          HabitStatus(
+            hb: Habit(
+              category: habitsStatus[j][1][2],
+              title: habitsStatus[j][1][0],
+              description: habitsStatus[j][1][1],
+              dates: habitsStatus[j][1][3],
+              time: habitsStatus[j][1][4],
+              bestStreak: habitsStatus[j][1][5],
+              notfid: habitsStatus[j][1][6],
+              priority: habitsStatus[j][1][7],
+            ),
+            isDone: habitStatus,
+          ),
+        );
       }
-      originalList.add(
-        Daysummary(habits: singleList, date: convertedList[i][0]),
-      );
+
+      originalList.add(Daysummary(habits: singleList, date: date));
     }
     return originalList;
   }

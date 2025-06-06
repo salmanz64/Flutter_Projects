@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     selectedDay = DateFormat('E').format(date);
+    Provider.of<HabitData>(context, listen: false).getData();
     Provider.of<HabitData>(context, listen: false).checkDelays();
 
     Provider.of<HabitData>(context, listen: false).doSomeDaySummary();

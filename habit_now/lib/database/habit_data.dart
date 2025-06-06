@@ -17,6 +17,14 @@ class HabitData extends ChangeNotifier {
   List<Daysummary> fifteenDaySummary = [];
 
   HiveDatabase db = HiveDatabase();
+  void getData() {
+    if (db.getHabits().isNotEmpty) {
+      overallHabits = db.getHabits();
+    }
+    if (db.getDaySummary().isNotEmpty) {
+      overallDaySummary = db.getDaySummary();
+    }
+  }
 
   void addHabit(Habit hb) {
     overallHabits.add(hb);
@@ -49,16 +57,19 @@ class HabitData extends ChangeNotifier {
       ShowLocalNotification().removeTheHabitsNotification(hb.notfid!);
     }
 
+    db.addHabittoHive(overallHabits);
     notifyListeners();
   }
 
   void editHabitName(Habit hb, String text) {
     hb.title = text;
+    db.addHabittoHive(overallHabits);
     notifyListeners();
   }
 
   void editHabitCategory(Habit hb, String text) {
     hb.category = text;
+    db.addHabittoHive(overallHabits);
     notifyListeners();
   }
 
@@ -133,6 +144,7 @@ class HabitData extends ChangeNotifier {
         overallDaySummary.add(ds);
       }
     }
+    db.addDaySummaryToHive(overallDaySummary);
     dofifteenDaysSummary();
   }
 
@@ -175,6 +187,7 @@ class HabitData extends ChangeNotifier {
         changeElement.isDone = (changeElement.isDone + 1) % 3;
       }
     });
+    db.addDaySummaryToHive(overallDaySummary);
     notifyListeners();
   }
 
