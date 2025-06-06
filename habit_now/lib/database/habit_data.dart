@@ -390,6 +390,7 @@ class HabitData extends ChangeNotifier {
     return data;
   }
 
+  //to implement chart
   Map pieChartData(Habit hb) {
     Map data = {'green': 0, 'red': 0, 'yellow': 0, 'total': 0};
     for (int i = 0; i < overallDaySummary.length; i++) {
